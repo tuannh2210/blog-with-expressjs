@@ -1,1 +1,6 @@
-//- p dc
+if errors
+  each error in errors
+    div.alert.alert-warning.alert-dismissible.fade.show(role="alert")
+      span= error.msg
+      button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+        span(aria-hidden="true") &times;
