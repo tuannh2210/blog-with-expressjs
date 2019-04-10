@@ -11,16 +11,16 @@ block content
       form(method="POST")
         .form-group
           label(for='email') Name
-          input#email.form-control(type='text', name='username', placeholder='Enter Email' )
+          input#email.form-control(type='text', name='username', placeholder='Enter Username' value=values? values.username : '')
         .form-group
           label(for='email') Email
-          input#email.form-control(type='text', name='email', placeholder='Enter Email')
+          input#email.form-control(type='text', name='email', placeholder='Enter Email' value=values? values.email: '')
         .form-group
           label(for='password') Password
           input#password.form-control(type='password', name='password', placeholder='Enter Password')
         .form-group
-          label(for='password') Confirm Password
-          input#password.form-control(type='password', name='password2', placeholder='Confirm Password')
+          label(for='password2') Confirm Password
+          input#password2.form-control(type='password', name='password2', placeholder='Confirm Password')
         button.btn.btn-primary.btn-block(type='submit') Register
       p.lead.mt-4
         |Have No Account? 

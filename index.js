@@ -23,12 +23,14 @@ app.set('views', './views');
 // middewares
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); //for parsing application/x-www-form-urlencoded
-// app.use(session({
-//   secret: process.env.SECRET,
-//   resave: false,
-//   saveUninitialized: true,
-// }))
-// setup route
+
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true,
+}))
+
+// set up route
 app.use('/',authRouter);
 //
 const post = 3000;

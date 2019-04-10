@@ -13,7 +13,7 @@ router.get('/register', controller.register);
 // router.post('/register', controller.postRegister);
 //
 router.post('/register',
-  // validate.postRegister,
+  validate.postRegister,
   controller.postRegister);
 
 module.exports = router

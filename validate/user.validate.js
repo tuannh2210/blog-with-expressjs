@@ -1,6 +1,14 @@
-module.exports.postRegister = ((req, res, next) => {
+const User = require('../models/user.model');
+
+module.exports.postRegister = (async (req, res, next) => {
   const {username, email, password, password2} = req.body;
   var errors = [];
+
+  var user =  await User.findOne({email: email});
+
+  if (user){
+    errors.push({msg: 'Email already exists'})
+  }
 
   if(!username || !email || !password || !password2){
     errors.push({msg:'Plese enter all fields'});

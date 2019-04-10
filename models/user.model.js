@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
@@ -7,14 +7,12 @@ const UserSchema = new Schema({
   username: {
 		type: String,
 		required: true,
-		index: true
 	},
 	email: {
 		type: String,
 		required: true,
-		index: true,
 	},
-  hash_password: {
+  password: {
     type: String,
     required: true
   },
@@ -26,10 +24,10 @@ const UserSchema = new Schema({
 	image: String,
 })
 
-UserSchema.methods.hashPassword = async function(password) {
-  let salt = await bcrypt.genSalt(10);
-  this.hash_password =  bcrypt.hashSync(password, salt);
-}
+// UserSchema.methods.hashPassword = async function(password) {
+//   let salt = await bcrypt.genSalt(10);
+//   return bcrypt.hashSync(password, salt);
+// }
 
 const User = mongoose.model('User', UserSchema, 'users');
 
