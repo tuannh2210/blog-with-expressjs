@@ -8,10 +8,11 @@ const validate = require('../validate/user.validate');
 //login page
 router.get('/login', controller.login);
 
+router.post('/login', controller.postLogin);
+
 //register page
 router.get('/register', controller.register);
-// router.post('/register', controller.postRegister);
-//
+
 router.post('/register',
   validate.postRegister,
   controller.postRegister);

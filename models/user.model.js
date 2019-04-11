@@ -28,6 +28,9 @@ const UserSchema = new Schema({
 //   let salt = await bcrypt.genSalt(10);
 //   return bcrypt.hashSync(password, salt);
 // }
+UserSchema.methods.comparePassword = function(pwd) {
+  return bcrypt.compareSync(pwd, this.password);
+};
 
 const User = mongoose.model('User', UserSchema, 'users');
 

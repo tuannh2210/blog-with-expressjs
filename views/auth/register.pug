@@ -1,12 +1,13 @@
 extends ../layout/common
-
+block title 
+  |Rigister account
 block content
   .row.mt-5
   .col-md-5.m-auto
     .card.card-body
       h1.text-center.mb-3
         i.fas.fa-sign-in-alt
-        |   Login
+        |   Register
       include ../partials/messages
       form(method="POST")
         .form-group
@@ -24,4 +25,4 @@ block content
         button.btn.btn-primary.btn-block(type='submit') Register
       p.lead.mt-4
         |Have No Account? 
-        a(href='/users/login') Login
+        a(href='/login') Login

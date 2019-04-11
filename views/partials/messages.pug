@@ -4,3 +4,8 @@ if errors
       span= error.msg
       button(type="button" class="close" data-dismiss="alert" aria-label="Close")
         span(aria-hidden="true") &times;
+if success_msg != ''
+  div.alert.alert-success.alert-dismissible.fade.show(role="alert")
+    span= success_msg
+    button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+      span(aria-hidden="true") &times;
