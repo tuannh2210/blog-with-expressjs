@@ -7,8 +7,8 @@ const FileStore = require('session-file-store')(session);
 const flash = require('connect-flash');
 const passport = require('passport');
 
-const validate = require('./validate/user.validate')
-const controller = require('./controllers/auth.controller')
+const authMiddlewares = require('./middlewares/auth.middleware')
+
 // create app
 const app = express();
 // passport config
@@ -42,7 +42,6 @@ app.use(passport.session());
 
 // Connect flash
 app.use(flash());
-
 // Global variables
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
@@ -54,17 +53,9 @@ app.use((req, res, next) => {
 
 // set up route
 app.use('/',authRouter);
-app.get('/', (req, res) => {
-  res.send('helllo')
-})
-//
-app.get('/secret', (req, res) => {
-    if (req.isAuthenticated()) { //trả về true nếu đã đăng nhập rồi
-        res.send('Đã đăng nhập');
-    } else {
-        res.redirect('/login');
-    }
-})
+
+app.use(express.static('public'))
+
 const post = 3000;
 
 app.listen(post, () => console.log(`listenning on port ${post}`))

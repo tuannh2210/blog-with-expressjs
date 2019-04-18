@@ -9,3 +9,8 @@ if success_msg != ''
     span= success_msg
     button(type="button" class="close" data-dismiss="alert" aria-label="Close")
       span(aria-hidden="true") &times;
+if error_msg != ''
+  div.alert.alert-danger.alert-dismissible.fade.show(role="alert")
+    span= error_msg
+    button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+      span(aria-hidden="true") &times;

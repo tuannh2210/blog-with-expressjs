@@ -3,44 +3,28 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 
-module.exports = function(passport) {
-  // passport.use(
-  //   new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
-  //     User.findOne({email: email})
-  //     .then(user => {
-  //       if(user) {
-  //         return done(null, false, { message: 'That email is not registered' });
-  //       }
-  //       else if (!user.comparePassword(password)) {
-  //         return done(null, false, { message: 'Password or username incorrect' });
-  //       }
-  //       else {
-  //         return done(null, user)
-  //       }
-  //     })
-  //     .catch(err => console.log('ljbhbjhb'))
-  //   })
-  // );
-
-  passport.use(
-    new LocalStrategy({ usernameField: 'email'}, (email, password, done) => {
+module.exports = (passport) => {
+  passport.use(new LocalStrategy({
+      usernameField: 'email',
+      passportField: 'password',
+      passReqToCallback: true
+    }, (req, email, password, done) => {
       // Match user
-      User.findOne({ email: email}).then(user => {
+      User.findOne({ email: email})
+      .then(user => {
         if (!user) {
-
-          return done(null, false, { message: 'That email is not registered' });
+          req.flash('message', 'That email is not registered')
+          return done(null, false);
         }
-
         // Match password
         else if (!user.comparePassword(password)) {
-          console.log(user.comparePassword(password));
-         return done(null, false, { message: 'Password or username incorrect' });
+          req.flash('message', 'Password or username incorrect')
+         return done(null, false);
        }
-       else {
-         return done(null, user)
-       }
-
-      });
+        return done(null, user);
+      }).catch(err => {
+        done(err, false)
+      })
     })
   );
 

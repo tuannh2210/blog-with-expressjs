@@ -4,7 +4,6 @@ const validator = require('validator')
 module.exports.postRegister = (async (req, res, next) => {
   const {username, email, password, password2} = req.body;
   var errors = [];
-
   var user =  await User.findOne({email: email});
 
   if (user){
@@ -33,3 +32,25 @@ module.exports.postRegister = (async (req, res, next) => {
 
   next()
 });
+
+module.exports.postLogin = (async ( req, res, next) => {
+  const {email, password} = req.body;
+  const errors = [];
+
+  if(!email || !password){
+    errors.push({msg:'Plese enter all fields'});
+  }
+  var user =  await User.findOne({email: email});
+
+  if (!user){
+    errors.push({msg: 'Password or email invalid'})
+  }
+  if(errors.length) {
+    res.render('auth/login', {
+      errors,
+      values: req.body
+    })
+  return;
+  }
+  next()
+})

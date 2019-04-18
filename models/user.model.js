@@ -24,10 +24,11 @@ const UserSchema = new Schema({
 	image: String,
 })
 
-// UserSchema.methods.hashPassword = async function(password) {
-//   let salt = await bcrypt.genSalt(10);
-//   return bcrypt.hashSync(password, salt);
-// }
+UserSchema.methods.setPassword = async function(pwd) {
+  let salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(pwd, salt);
+
+}
 UserSchema.methods.comparePassword = function(pwd) {
   return bcrypt.compareSync(pwd, this.password);
 };

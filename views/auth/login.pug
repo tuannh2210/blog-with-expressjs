@@ -9,10 +9,11 @@ block content
         i.fas.fa-sign-in-alt
         |   Login
       include ../partials/messages
+      p= message
       form(action='/login', method='POST')
         .form-group
           label(for='email') Email
-          input#email.form-control(type='email', name='email', placeholder='Enter Email')
+          input#email.form-control(type='text', name='email', placeholder='Enter Email' value=values ? values.email : '')
         .form-group
           label(for='password') Password
           input#password.form-control(type='password', name='password', placeholder='Enter Password')
