@@ -5,9 +5,9 @@ const router = express.Router();
 const controller = require('../controllers/auth.controller');
 const validate = require('../validate/user.validate');
 
-const authMiddlewares = require('../middlewares/auth.middleware')
+const {ensureAuthenticated} = require('../middlewares/auth.middleware')
 
-router.get('/dashboard', authMiddlewares.ensureAuthenticated, (req ,res) => {
+router.get('/dashboard', ensureAuthenticated, (req ,res) => {
   res.render('dashboard')
 })
 //login page

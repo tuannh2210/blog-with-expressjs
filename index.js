@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGO_URL)
 .catch(err => console.log('Connetion error'))
 // routes
 const authRouter = require('./routes/auth.route');
-
+const createError = require('http-errors')
 // pug template
 app.set('view engine', 'pug');
 app.set('views', './views');

@@ -1,7 +1,8 @@
-module.exports.ensureAuthenticated = ((req, res, next) => {
+exports.ensureAuthenticated = ((req, res, next) => {
     if(req.isAuthenticated()) {
       return next();
     }
-    req.flash('error_msg','Please log in view this resource')
-    res.redirect('login')
+    else {
+      res.redirect('/login')
+    }
   })

@@ -1,0 +1,8 @@
+html
+  header
+    container
+      .col-md-12
+        .row
+          h1= message 
+          h2.text-danger= error.status
+          pre #{error.stack} 

@@ -13,12 +13,12 @@ module.exports = (passport) => {
       User.findOne({ email: email})
       .then(user => {
         if (!user) {
-          req.flash('message', 'That email is not registered')
+          req.flash('error_msg', 'That email is not registered')
           return done(null, false);
         }
         // Match password
         else if (!user.comparePassword(password)) {
-          req.flash('message', 'Password or username incorrect')
+          req.flash('error_msg', 'Password or username incorrect')
          return done(null, false);
        }
         return done(null, user);

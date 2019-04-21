@@ -10,18 +10,17 @@ module.exports.register = ((req, res) => {
   res.render('auth/register')
 })
 
+const hashPasword = (password) => {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+}
+
 module.exports.postRegister = (async (req, res, next) => {
    const {email, username, password} = req.body;
    const newUser = {
      username,
      email,
-     password
+     password: hashPasword(password),
    };
-
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(newUser.password, salt);
-
-  newUser.password = hash
 
   User.create(newUser)
       .then(() => {
@@ -40,6 +39,6 @@ module.exports.postLogin = ((req, res, next) => {
 
 module.exports.logout = ((req, res, next) => {
     req.logout();
-    req.flash('success_msg','You are logged out')
+    req.session.destroy();
     res.redirect('/login')
 })
