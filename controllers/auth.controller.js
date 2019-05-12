@@ -3,7 +3,10 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 module.exports.login = ((req, res) => {
-  res.render('auth/login')
+  console.log(req.session);
+  res.render('auth/login',{
+    error_msg: req.flash('error_msg')
+  })
 })
 
 module.exports.register = ((req, res) => {
@@ -16,15 +19,15 @@ const hashPasword = (password) => {
 
 module.exports.postRegister = (async (req, res, next) => {
    const {email, username, password} = req.body;
-   const newUser = {
+   const newUser = new User({
      username,
      email,
      password: hashPasword(password),
-   };
+   });
 
-  User.create(newUser)
+  newUser.save()
       .then(() => {
-          req.flash('success_msg','You are now registered and can log in');
+          // req.flash('success_msg','You are now registered and can log in');
           res.redirect('/login');
        })
 })
@@ -39,6 +42,12 @@ module.exports.postLogin = ((req, res, next) => {
 
 module.exports.logout = ((req, res, next) => {
     req.logout();
-    req.session.destroy();
-    res.redirect('/login')
+    req.session.destroy(err => {
+      if (err) {
+        return res.redirect('/dashboard')
+      }
+
+      res.clearCookie('sessionId')
+      res.redirect('/login');
+    });
 })

@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cookieParser = require('cookie-parser')
 const FileStore = require('session-file-store')(session);
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -21,7 +22,6 @@ mongoose.connect(process.env.MONGO_URL)
 .catch(err => console.log('Connetion error'))
 // routes
 const authRouter = require('./routes/auth.route');
-const createError = require('http-errors')
 // pug template
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -29,13 +29,30 @@ app.set('views', './views');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); //for parsing application/x-www-form-urlencoded
 
+const TWO_HOURS =  1000 * 60 * 60 * 2;
+const GMT = 1000 * 60 * 60 * 7
+
+const {
+  SESS_LIFETIME = TWO_HOURS + GMT,
+  NODE_ENV = 'development',
+  SESS_SECRET = 'ufheukdjdJDKUFEDK/D,GDLQW4=45396',
+} = process.env
+
+const IN_PROD = NODE_ENV === 'production';
+
 app.use(session({
-  store: new FileStore(),
-  secret: process.env.SECRET,
+  name: 'sessionId',
+  secret: SESS_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: SESS_LIFETIME,
+    sameSite: true,
+    secure: IN_PROD,
+  },
 }))
 
+app.use(cookieParser())
 // psssport middewares
 app.use(passport.initialize());
 app.use(passport.session());
@@ -47,7 +64,6 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
-  res.cookie('session', req.sessionID)
   next();
 });
 

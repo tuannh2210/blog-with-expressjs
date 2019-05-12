@@ -1,8 +1,9 @@
 exports.ensureAuthenticated = ((req, res, next) => {
-    if(req.isAuthenticated()) {
-      return next();
+    if(!req.isAuthenticated()) {
+      res.redirect('/login')
     }
     else {
-      res.redirect('/login')
+      res.locals.user = req.user;
+      return next();
     }
   })

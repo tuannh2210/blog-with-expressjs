@@ -28,9 +28,7 @@ module.exports.postRegister = (async (req, res, next) => {
     })
     return;
   }
-  res.locals.success = true;
-
-  next()
+    next()
 });
 
 module.exports.postLogin = (async ( req, res, next) => {
@@ -52,5 +50,8 @@ module.exports.postLogin = (async ( req, res, next) => {
     })
   return;
   }
+
+  res.locals.user = user;
+
   next()
 })
