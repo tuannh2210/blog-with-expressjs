@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 module.exports.login = ((req, res) => {
-  console.log(req.session);
   res.render('auth/login',{
     error_msg: req.flash('error_msg')
   })

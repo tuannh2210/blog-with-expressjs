@@ -16,13 +16,9 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
-    type: Date,
-    default: Date.now
-  },
 	bio: String,
 	image: String,
-})
+}, { timestamps: true })
 
 UserSchema.methods.setPassword = async function(pwd) {
   let salt = await bcrypt.genSalt(10);

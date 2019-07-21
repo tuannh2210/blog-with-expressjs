@@ -1,5 +1,5 @@
+require('dotenv').config()
 const express = require('express');
-const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -8,20 +8,20 @@ const FileStore = require('session-file-store')(session);
 const flash = require('connect-flash');
 const passport = require('passport');
 
-const authMiddlewares = require('./middlewares/auth.middleware')
+const {ensureAuthenticated} = require('./middlewares/auth.middleware')
 
 // create app
 const app = express();
 // passport config
 require('./config/passport')(passport)
-// setup env
-dotenv.config()
+
 //connet mongoose
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log(`Connetion mongodb successfull`))
 .catch(err => console.log('Connetion error'))
 // routes
 const authRouter = require('./routes/auth.route');
+const articleRouter = require('./routes/article.route');
 // pug template
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -29,30 +29,23 @@ app.set('views', './views');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); //for parsing application/x-www-form-urlencoded
 
-const TWO_HOURS =  1000 * 60 * 60 * 2;
-const GMT = 1000 * 60 * 60 * 7
-
-const {
-  SESS_LIFETIME = TWO_HOURS + GMT,
-  NODE_ENV = 'development',
-  SESS_SECRET = 'ufheukdjdJDKUFEDK/D,GDLQW4=45396',
-} = process.env
-
-const IN_PROD = NODE_ENV === 'production';
-
+// section
+const IN_PROD = process.env.NODE_ENV === 'production';
+const GMT = 1000*60*60*7
 app.use(session({
   name: 'sessionId',
-  secret: SESS_SECRET,
+  secret: 'SESS_SECRET',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: SESS_LIFETIME,
+    maxAge: null,
     sameSite: true,
     secure: IN_PROD,
   },
 }))
 
 app.use(cookieParser())
+
 // psssport middewares
 app.use(passport.initialize());
 app.use(passport.session());
@@ -67,8 +60,22 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.use(function ( req, res, next) {
+//   console.log(new Date(), req.method, req.path);
+//   next()
+// })
+
 // set up route
-app.use('/',authRouter);
+app.use('/users', authRouter);
+app.use('/theads', articleRouter);
+
+app.use('/dashboard', ensureAuthenticated, ((req, res) => {
+  res.render('dashboard')
+}));
+
+app.use('*',((req, res) => {
+  res.render('error')
+}));
 
 app.use(express.static('public'))
 

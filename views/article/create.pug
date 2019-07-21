@@ -1,0 +1,25 @@
+extends ../layout/common
+block title 
+  | create port
+block content
+  .row.mt-5
+  .col-md-5.m-auto
+      h1.text-center.mb-3
+        |   Create post
+      include ../partials/messages
+      p= message
+      form(action='/theads/create', method='POST')
+        .form-group
+          label(for='Title') Title
+          input#email.form-control(type='text', name='title', placeholder='Enter Title')
+        .form-group
+          label(for='password') Description
+          input#password.form-control(type='text', name='description', placeholder='Enter description')
+        .form-group
+          label(for='password') Body
+          input#password.form-control(type='text', name='body', placeholder='Enter body')
+        .form-group
+          label(for='password') Author
+          input#password.form-control(type='text', name='author', placeholder='Enter Author')    
+        button.btn.btn-primary.btn-block.col-md-3.m-auto(type='submit') Save
+    

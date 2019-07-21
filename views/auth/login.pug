@@ -10,7 +10,7 @@ block content
         |   Login
       include ../partials/messages
       p= message
-      form(action='/login', method='POST')
+      form(action='/users/login', method='POST')
         .form-group
           label(for='email') Email
           input#email.form-control(type='text', name='email', placeholder='Enter Email' value=values ? values.email : '')
