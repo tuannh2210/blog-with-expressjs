@@ -5,14 +5,17 @@ const User = mongoose.model('User');
 
 const Schema = mongoose.Schema;
 
-const ArticleSchema = new Schema({
-  title: {type: String, required: true},
-  // slug: {type: String, lowercase: true},
-  description: String,
-	body: String,
-  tagList: [{type: String}],
-  // author: {type: mongoose.Schema.Types.ObjectId, ref:'User'}
-}, { timestamps: true })
+const ArticleSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    // slug: {type: String, lowercase: true},
+    description: String,
+    body: String,
+    tagList: [{ type: String }],
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  },
+  { timestamps: true }
+);
 
 // ArticleSchema.plugin(uniqueValidator, {message: "is already taken."});
 
@@ -26,7 +29,11 @@ const ArticleSchema = new Schema({
 //   }
 //   return next()
 // })
-
+ArticleSchema.methods.toJSONFor = function(user) {
+  return {
+    author: this.author.toProfileJSONFor(user)
+  };
+};
 const Article = mongoose.model('Article', ArticleSchema, 'articles');
 
-module.exports = Article
+module.exports = Article;

@@ -1,7 +1,7 @@
-const router =  require('express').Router();
+const router = require('express').Router();
 
 const controller = require('../controllers/article.controller');
-const {ensureAuthenticated} = require('../middlewares/auth.middleware')
+const { ensureAuthenticated } = require('../middlewares/auth.middleware');
 
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
@@ -9,22 +9,24 @@ const Article = require('../models/article.model');
 
 router.get('/', controller.getAll);
 
-router.get('/create', ensureAuthenticated, controller.createPost)
+router.get('/create', controller.create);
 
-router.post('/create', ensureAuthenticated, controller.saveCreate)
+router.post('/create', controller.saveCreate);
 
+router.get('/edit/:article', controller.edit);
 
+router.post('/edit/:article', controller.saveEdit);
 
+router.get('/remove/:article', controller.remove);
 
-router.param('article', function(req, res, next, slug){
-	Article.findOne({slug:slug})
-	.then(article => {
-		if(!article) { return res.sendStatus(404); }
-
-		req.article = article;
-
-		return next();
-	}).catch(next())
+// get theo tên param
+router.param('article', function(req, res, next, articleId) {
+  Article.findOne({ _id: articleId })
+    .then(article => {
+      if (!article) res.sendStatus(404);
+      req.article = article;
+      return next();
+    })
+    .catch(err => next(err));
 });
-
-module.exports = router
+module.exports = router;

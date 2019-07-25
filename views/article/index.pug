@@ -1,4 +1,22 @@
-each article in articles
-  p| Titles: 
-    span= article.title
-  p= article.body
+extends ../layout/common
+block title 
+  | List port
+block content
+  table.table
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">description</th>
+      th 
+        a(href="/theads/create") Create
+    </tr>
+    - var i = 0
+    each article in articles
+      tr
+        td= ++i
+        td= article.title
+        td= article.description
+        td
+            a.btn.btn-info(href= '/theads/edit/' + article._id) Edit
+            a.btn.btn-info(href='/theads/remove/' + article._id) Delete
+
