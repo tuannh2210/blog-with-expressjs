@@ -11,14 +11,16 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      required: true
+      required: true,
+      default: 'imgaes/default.png'
     },
+    bio: String,
+    image: String,
     password: {
       type: String,
       required: true
     },
-    bio: String,
-    image: String
+    role: Number
   },
   {
     timestamps: true
@@ -26,17 +28,11 @@ const UserSchema = new Schema(
 );
 
 UserSchema.methods.hashPasword = password => {
-  return 'bcrypt.hash(password, bcrypt.genSalt(10));';
+  return bcrypt.hash(password, bcrypt.genSalt(10));
 };
 
 UserSchema.methods.comparePassword = function(pwd) {
   return bcrypt.compareSync(pwd, this.password);
-};
-
-UserSchema.methods.toProfileJSONFor = function(user) {
-  return {
-    username: this.username
-  };
 };
 
 const User = mongoose.model('User', UserSchema, 'users');
