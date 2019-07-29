@@ -1,0 +1,25 @@
+nav(aria-label='')
+  ul.pagination.justify-content-center
+  
+    if (page > 1)
+      li.page-item
+        a.page-link(href="?page="+(page-1), tabindex='-1', aria-disabled='true') Previous
+    else 
+      li.page-item.disabled
+        a.page-link(href='#', tabindex='-1', aria-disabled='true') Previous
+
+    - var i = 1
+    while i <= totalPage
+      if(page == i)
+        li.page-item.active
+          a.page-link(href='?page='+i)=i++
+      else
+        li.page-item
+          a.page-link(href='?page='+i)=i++
+
+    if(page < totalPage)
+      li.page-item
+          a.page-link(href="?page="+ (page + 1), tabindex='-1', aria-disabled='true') Next
+    else
+      li.page-item.disabled
+          a.page-link(href="?page="+ (page + 1), tabindex='-1', aria-disabled='true') Next

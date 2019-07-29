@@ -32,7 +32,9 @@ app.use(bodyParser.urlencoded({ extended: true })); //for parsing application/x-
 
 // section
 const IN_PROD = process.env.NODE_ENV === 'production';
-const GMT = 1000 * 60 * 60 * 7;
+const MILLISECONDS_IN_A_HOUSE = 1000 * 60 * 60;
+const GMT = 7;
+const TIME = MILLISECONDS_IN_A_HOUSE * (2 + GMT);
 app.use(
   session({
     name: 'sessionId',
@@ -40,7 +42,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: null,
+      maxAge: TIME,
       sameSite: true,
       secure: IN_PROD
     }
@@ -63,10 +65,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(function ( req, res, next) {
+// app.use(function(req, res, next) {
 //   console.log(new Date(), req.method, req.path);
-//   next()
-// })
+//   next();
+// });
 
 // set up route
 app.use('/', authRouter);
@@ -78,6 +80,12 @@ app.use('/dashboard', ensureAuthenticated, (req, res) => {
 
 app.use(express.static('public'));
 
-const post = 3000;
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
+
+const post = 2210;
 
 app.listen(post, () => console.log(`listenning on port ${post}`));

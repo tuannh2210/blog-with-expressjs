@@ -1,22 +1,24 @@
-extends ../layout/common
+extends ../layout/admin
 block title 
-  | create port
+  | Create new post
 block content
   .row.mt-5
   .col-md-5.m-auto
-      h1.text-center.mb-3
-        |   Create post
+      h1.text-center.mb-3 Create new post
       include ../partials/messages
       p= message
-      form(action='/theads/create', method='POST')
+      form(action='/theads/create', method='POST'  enctype="multipart/form-data")
         .form-group
           label(for='Title') Title
-          input#email.form-control(type='text', name='title', placeholder='Enter Title')
+          input#title.form-control(type='text', name='title', placeholder='Enter Title')
+        .form-group
+          label(for='images') Images
+          input#images.form-control(type='file', name='images', placeholder='Enter Title')
         .form-group
           label(for='password') Description
-          input#password.form-control(type='text', name='description', placeholder='Enter description')
+          textarea#password.form-control(type='text', name='description', placeholder='Enter description')
         .form-group
           label(for='password') Body
-          input#password.form-control(type='text', name='body', placeholder='Enter body')
+          textarea#password.form-control(type='text', name='body', placeholder='Enter body')
         button.btn.btn-primary.btn-block.col-md-3.m-auto(type='submit') Save
     

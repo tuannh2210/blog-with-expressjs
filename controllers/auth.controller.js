@@ -17,7 +17,11 @@ const hashPasword = password => {
 };
 
 module.exports.postRegister = async (req, res, next) => {
-  const { email, username, password } = req.body;
+  const {
+    email,
+    username,
+    password
+  } = req.body;
   const newUser = new User({
     username,
     email,

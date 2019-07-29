@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const multer = require('multer');
 
 const controller = require('../controllers/article.controller');
 const { ensureAuthenticated } = require('../middlewares/auth.middleware');
@@ -7,17 +8,24 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Article = require('../models/article.model');
 
+const upload = multer({ dest: './public/uploads/' });
+
 router.get('/', controller.getAll);
 
-router.get('/create', controller.create);
+router.get('/create', ensureAuthenticated, controller.create);
 
-router.post('/create', controller.saveCreate);
+router.post(
+  '/create',
+  upload.single('images'),
+  ensureAuthenticated,
+  controller.saveCreate
+);
 
-router.get('/edit/:article', controller.edit);
+router.get('/edit/:article', ensureAuthenticated, controller.edit);
 
-router.post('/edit/:article', controller.saveEdit);
+router.post('/edit/:article', ensureAuthenticated, controller.saveEdit);
 
-router.get('/remove/:article', controller.remove);
+router.get('/remove/:article', ensureAuthenticated, controller.remove);
 
 // get theo tên param
 router.param('article', function(req, res, next, articleId) {

@@ -1,11 +1,11 @@
-extends ../layout/common
+extends ../layout/admin
 block title 
-  | create port
+  | Create new post
 block content
   .row.mt-5
   .col-md-5.m-auto
       h1.text-center.mb-3
-        |   Create post
+        |   Edit post
       include ../partials/messages
       p= message
       form(action= article._id, method='POST')
@@ -17,6 +17,6 @@ block content
           input#password.form-control(type='text', name='description', value= article.description)
         .form-group
           label(for='password') Body
-          input#password.form-control(type='text', name='body', placeholder='Enter body')
+          textarea#password.form-control(type='text', name='body', placeholder='Enter body')= article.body
         button.btn.btn-primary.btn-block.col-md-3.m-auto(type='submit') Save
     

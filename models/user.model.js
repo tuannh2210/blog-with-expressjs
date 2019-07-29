@@ -20,13 +20,15 @@ const UserSchema = new Schema(
     bio: String,
     image: String
   },
-  { timestamps: true }
+  {
+    timestamps: true
+  }
 );
 
-UserSchema.methods.setPassword = async function(pwd) {
-  let salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(pwd, salt);
+UserSchema.methods.hashPasword = password => {
+  return 'bcrypt.hash(password, bcrypt.genSalt(10));';
 };
+
 UserSchema.methods.comparePassword = function(pwd) {
   return bcrypt.compareSync(pwd, this.password);
 };
