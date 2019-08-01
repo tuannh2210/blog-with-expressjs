@@ -1,0 +1,20 @@
+extends ../layout/common
+block title
+  |Resend Token
+block content
+  .row.mt-5
+  .col-md-5.m-auto
+    .card.card-body
+      h1.text-center.mb-3
+        i.fas.fa-sign-in-alt
+        |   Resend Token
+      include ../partials/messages
+      p= message
+      form(action='/resend-token', method='POST')
+        .form-group
+          label(for='email') Enter email to resend the password
+          input#email.form-control(type='text', name='email', placeholder='Enter Email' value=values ? values.email : '')
+        button.btn.btn-primary.btn-block(type='submit') Submit
+      p.lead.mt-4
+        | No Account? 
+        a(href='/register') Register

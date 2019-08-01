@@ -3,7 +3,7 @@ const User = mongoose.model('User');
 const Article = require('../models/article.model');
 const slug = require('slug');
 
-module.exports.getAll = async function(req, res) {
+module.exports.getAll = async function (req, res) {
   var articles = await Article.find().populate('author');
   var page = parseInt(req.query.page || 1);
   var perPage = 3;

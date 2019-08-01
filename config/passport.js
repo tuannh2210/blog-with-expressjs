@@ -10,8 +10,9 @@ module.exports = (passport) => {
   }, (email, password, done) => {
     // Match user
     User.findOne({
-        email: email
-      })
+      email: email,
+      isVerified: true
+    })
       .then(user => {
         if (!user) {
           return done(null, false);

@@ -1,57 +1,67 @@
 const User = require('../models/user.model');
-const validator = require('validator')
+const validator = require('validator');
 
-module.exports.postRegister = (async (req, res, next) => {
-  const {username, email, password, password2} = req.body;
+module.exports.postRegister = async (req, res, next) => {
+  const { username, email, password, password2 } = req.body;
   var errors = [];
-  var user =  await User.findOne({email: email});
+  var user = await User.findOne({ email: email });
 
-  if (user){
-    errors.push({msg: 'Email already exists'})
+  if (user) {
+    errors.push({ msg: 'Email already exists' });
   }
-  if(!username || !email || !password || !password2){
-    errors.push({msg:'Plese enter all fields'});
+  if (!username || !email || !password || !password2) {
+    errors.push({ msg: 'Plese enter all fields' });
   }
-  if(!validator.isEmail(email)){
-    errors.push({msg: 'Wrong email format'})
+  if (!validator.isEmail(email)) {
+    errors.push({ msg: 'Wrong email format' });
   }
-  if(password !== password2){
-    errors.push({  msg: 'Password do not match'  })
+  if (password !== password2) {
+    errors.push({ msg: 'Password do not match' });
   }
   if (password.length < 6) {
-    errors.push({msg: 'Password must be at least 6 characters'})
+    errors.push({ msg: 'Password must be at least 6 characters' });
   }
-  if (errors.length > 0 ) {
+  if (errors.length > 0) {
     res.render('auth/register', {
       errors,
       values: req.body
-    })
+    });
     return;
   }
-    next()
-});
+  next();
+};
 
-module.exports.postLogin = (async ( req, res, next) => {
-  const {email, password} = req.body;
+module.exports.postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
   const errors = [];
+  const user = await User.findOne({ email: email });
+  const isVerified = await User.findOne({ email: email, isVerified: true })
 
-  if(!email || !password){
-    errors.push({msg:'Plese enter all fields'});
+  if (!email || !password) {
+    errors.push({ msg: 'Invalid email or password' });
   }
-  var user =  await User.findOne({email: email});
 
-  if (!user){
-    errors.push({msg: 'Password or email invalid'})
+  if (!user) {
+    errors.push({
+      msg: "Sorry, we can't find an account with this email address. Please try again or create a new account."
+    });
   }
-  if(errors.length) {
+
+  if (!isVerified) {
+    errors.push({
+      msg: "This account hasn't already been verified"
+    });
+  }
+
+  if (errors.length) {
     res.render('auth/login', {
       errors,
       values: req.body
-    })
-  return;
+    });
+    return;
   }
 
   res.locals.user = user;
 
-  next()
-})
+  next();
+};

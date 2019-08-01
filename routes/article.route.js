@@ -28,7 +28,7 @@ router.post('/edit/:article', ensureAuthenticated, controller.saveEdit);
 router.get('/remove/:article', ensureAuthenticated, controller.remove);
 
 // get theo tên param
-router.param('article', function(req, res, next, articleId) {
+router.param('article', function (req, res, next, articleId) {
   Article.findOne({ _id: articleId })
     .then(article => {
       if (!article) res.sendStatus(404);
