@@ -10,6 +10,7 @@ block content
     col
     tr
       th #
+      th Author
       th Title
       th Imgges
       th Description
@@ -21,6 +22,8 @@ block content
       tr
         td= ++i
         td= article.author.username
+        td
+          a(href= '/theads/' + article.slug)=  article.title
         td
           img(src=article.images, alt=article.title, width='100px')
         td= article.description

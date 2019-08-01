@@ -24,6 +24,7 @@ const ArticleSchema = new Schema(
         type: String
       }
     ],
+    view: Number,
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
@@ -53,6 +54,6 @@ ArticleSchema.methods.toJSONFor = function(user) {
     author: this.author.toProfileJSONFor(user)
   };
 };
-const Article = mongoose.model('Article', ArticleSchema, 'articles');
+const Article = mongoose.model('Article', ArticleSchema);
 
 module.exports = Article;

@@ -3,11 +3,11 @@ const User = mongoose.model('User');
 const Article = require('../models/article.model');
 const slug = require('slug');
 
-module.exports.getAll = async function (req, res) {
+module.exports.getAll = async function(req, res) {
   var articles = await Article.find().populate('author');
   var page = parseInt(req.query.page || 1);
   var perPage = 3;
-  var totalPage = articles.length / perPage;
+  var totalPage = Math.ceil(articles.length / perPage);
   var start = (page - 1) * perPage;
   var end = page * perPage;
   res.render('article/index', {
@@ -15,6 +15,30 @@ module.exports.getAll = async function (req, res) {
     page: page,
     totalPage: totalPage
   });
+};
+
+module.exports.detail = async (req, res) => {
+  var article = await Article.findOne({
+    slug: req.params.slug
+  }).populate('author');
+
+  var date = new Date(article.createdAt)
+    .toJSON()
+    .slice(0, 10)
+    .split('-')
+    .reverse()
+    .join('/');
+
+  const pageViewCount = article.view;
+  const conunt = parseInt(pageViewCount + 1);
+
+  Article.update({ slug: req.params.slug }, { view: conunt }).then(() =>
+    res.render('article/detail', {
+      article: article,
+      date: date,
+      conunt: conunt
+    })
+  );
 };
 
 module.exports.create = (req, res) => {
