@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Article = require('../models/article.model');
 const slug = require('slug');
+const fs = require('fs');
 
 module.exports.getAll = async function(req, res) {
   var articles = await Article.find().populate('author');
@@ -28,10 +29,8 @@ module.exports.detail = async (req, res) => {
     .split('-')
     .reverse()
     .join('/');
-
   const pageViewCount = article.view;
-  const conunt = parseInt(pageViewCount + 1);
-
+  const conunt = parseInt(pageViewCount + 1) || 0;
   Article.update({ slug: req.params.slug }, { view: conunt }).then(() =>
     res.render('article/detail', {
       article: article,
@@ -72,27 +71,32 @@ module.exports.saveCreate = (req, res) => {
 };
 
 module.exports.edit = (req, res) => {
+  console.log(req.article);
   res.render('article/edit', {
     article: req.article
   });
 };
 
 module.exports.saveEdit = (req, res) => {
-  const { title, body, description } = req.body;
+  res.send('jmhj,hk' + req.body.image_old);
+  if (req.file) {
+    var pathImg = (req.body.images = req.file.path
+      .replace(/\\/g, '/')
+      .split('/')
+      .slice(1)
+      .join('/'));
+  }
+  const { title, body, description, images } = req.body;
   const data = {
     title: title,
     body: body,
     description: description,
+    images: images,
     author: req.user,
-    slug:
-      slug(title) + '-' + ((Math.random() * Math.pow(36, 6)) | 0).toString(36)
+    slug: slug(title) + '-' + ((Math.random() * Math.pow(36, 6)) | 0)
   };
-  Article.findByIdAndUpdate(
-    {
-      _id: req.params.article
-    },
-    data
-  )
+
+  Article.findByIdAndUpdate({ _id: req.params.article }, data)
     .then(() => res.redirect('/theads'))
     .catch(err => res.json(err));
 };

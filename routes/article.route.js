@@ -25,7 +25,12 @@ router.post(
 
 router.get('/edit/:article', ensureAuthenticated, controller.edit);
 
-router.post('/edit/:article', ensureAuthenticated, controller.saveEdit);
+router.post(
+  '/edit/:article',
+  upload.single('images'),
+  ensureAuthenticated,
+  controller.saveEdit
+);
 
 router.get('/remove/:article', ensureAuthenticated, controller.remove);
 

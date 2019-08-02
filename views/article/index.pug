@@ -12,7 +12,7 @@ block content
       th #
       th Author
       th Title
-      th Imgges
+      th Images
       th Description
       th 
         a(href="/theads/create") Create
@@ -25,7 +25,8 @@ block content
         td
           a(href= '/theads/' + article.slug)=  article.title
         td
-          img(src=article.images, alt=article.title, width='100px')
+          a(href=`${article.images}`)
+            img(src=article.images, alt=article.title, width='100px')
         td= article.description
         td
           a.btn.btn-info(href= '/theads/edit/' + article._id)

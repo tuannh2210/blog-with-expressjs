@@ -41,7 +41,7 @@ ArticleSchema.plugin(uniqueValidator, {
 
 ArticleSchema.methods.slugify = function() {
   let random = (Math.random() * Math.pow(36, 6)) | 0;
-  this.slug = slug(this.title) + '-' + random.toString(36);
+  this.slug = slug(this.title) + '-' + random.toString('hex');
 };
 
 ArticleSchema.pre('validate', function(next) {
