@@ -1,5 +1,6 @@
 const User = require('../models/user.model');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 module.exports.postRegister = async (req, res, next) => {
   const { username, email, password, password2 } = req.body;
@@ -34,16 +35,26 @@ module.exports.postRegister = async (req, res, next) => {
 module.exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const errors = [];
-  const user = await User.findOne({ email: email });
-  const isVerified = await User.findOne({ email: email, isVerified: true })
+
+  const user = await User.findOne({
+    email: email
+  });
+
+  // res.json({ user });
+  const comparePassword = pwd => {
+    return bcrypt.compareSync(pwd, user.password);
+  };
+
+  // res.json({ email: email, password: comparePassword(password) });
+  const isVerified = await User.findOne({ email: email, isVerified: true });
 
   if (!email || !password) {
-    errors.push({ msg: 'Invalid email or password' });
+    errors.push({ msg: 'Enter email and password' });
   }
 
-  if (!user) {
+  if (!user && !comparePassword(password)) {
     errors.push({
-      msg: "Sorry, we can't find an account with this email address. Please try again or create a new account."
+      msg: 'Invalid email or password'
     });
   }
 

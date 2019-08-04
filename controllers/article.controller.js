@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Article = require('../models/article.model');
 const slug = require('slug');
-const fs = require('fs');
+const moment = require('moment');
 
-module.exports.getAll = async function(req, res) {
+module.exports.getAll = async function (req, res) {
   var articles = await Article.find().populate('author');
   var page = parseInt(req.query.page || 1);
   var perPage = 3;
@@ -19,18 +19,14 @@ module.exports.getAll = async function(req, res) {
 };
 
 module.exports.detail = async (req, res) => {
-  var article = await Article.findOne({
+  const article = await Article.findOne({
     slug: req.params.slug
   }).populate('author');
 
-  var date = new Date(article.createdAt)
-    .toJSON()
-    .slice(0, 10)
-    .split('-')
-    .reverse()
-    .join('/');
+  const date = moment(article.createdAt).format('DD/MM/YYYY');
   const pageViewCount = article.view;
   const conunt = parseInt(pageViewCount + 1) || 0;
+
   Article.update({ slug: req.params.slug }, { view: conunt }).then(() =>
     res.render('article/detail', {
       article: article,
@@ -45,13 +41,16 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.saveCreate = (req, res) => {
-  if (req.file) {
+  if (req.file == undefined || req.file == '') {
+    req.body.images = req.body.image_old;
+  } else {
     var pathImg = (req.body.images = req.file.path
       .replace(/\\/g, '/')
       .split('/')
       .slice(1)
       .join('/'));
   }
+
   const { title, body, description, images } = req.body;
 
   const article = new Article({
@@ -70,21 +69,26 @@ module.exports.saveCreate = (req, res) => {
     .catch(err => res.send(err.message));
 };
 
-module.exports.edit = (req, res) => {
-  console.log(req.article);
+module.exports.edit = async (req, res) => {
+  var article = await Article.findById({ _id: req.params.article });
+  if (article.author === req.user._id) {
+    req.flash('error_msg', 'Not Authorzed');
+    res.redirect('/theads');
+  }
   res.render('article/edit', {
     article: req.article
   });
 };
 
 module.exports.saveEdit = (req, res) => {
-  res.send('jmhj,hk' + req.body.image_old);
   if (req.file) {
     var pathImg = (req.body.images = req.file.path
       .replace(/\\/g, '/')
       .split('/')
       .slice(1)
       .join('/'));
+  } else {
+    req.body.images = req.body.image_old;
   }
   const { title, body, description, images } = req.body;
   const data = {
@@ -102,9 +106,14 @@ module.exports.saveEdit = (req, res) => {
 };
 
 module.exports.remove = (req, res) => {
-  Article.findOneAndDelete({
-    _id: req.params.article
-  })
-    .then(() => res.redirect('/theads'))
-    .catch(err => res.json(err));
+  if (req.article.author === req.user._id) {
+    req.flash('error_msg', 'Not Authorzed');
+    res.redirect('/theads');
+  } else {
+    Article.remove({
+      _id: req.params.article
+    })
+      .then(() => res.redirect('/theads'))
+      .catch(err => res.json(err));
+  }
 };

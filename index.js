@@ -2,19 +2,19 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const FileStore = require('session-file-store')(session);
 const flash = require('connect-flash');
 const passport = require('passport');
 
 const { ensureAuthenticated } = require('./middlewares/auth.middleware');
-
+const logger = require('./middlewares/logger.middleware');
+const session = require('./middlewares/session.middleware');
 // create app
 const app = express();
 // passport config
 require('./config/passport')(passport);
 
+app.use(logger);
 //connet mongoose
 mongoose
   .connect(process.env.MONGO_URL)
@@ -23,33 +23,17 @@ mongoose
 // routes
 const authRouter = require('./routes/auth.route');
 const articleRouter = require('./routes/article.route');
+
 // pug template
 app.set('view engine', 'pug');
 app.set('views', './views');
-// middewares
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); //for parsing application/x-www-form-urlencoded
 
-// section
-const IN_PROD = process.env.NODE_ENV === 'production';
-const MILLISECONDS_IN_A_HOUSE = 1000 * 60 * 60;
-const GMT = 7;
-const TIME = MILLISECONDS_IN_A_HOUSE * (2 + GMT);
-app.use(
-  session({
-    name: 'sessionId',
-    secret: 'SESS_SECRET',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: TIME,
-      sameSite: true,
-      secure: IN_PROD
-    }
-  })
-);
+// middewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
+app.use(session());
 
 // psssport middewares
 app.use(passport.initialize());
@@ -57,18 +41,12 @@ app.use(passport.session());
 
 // Connect flash
 app.use(flash());
-// Global variables
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   next();
 });
-
-// app.use(function(req, res, next) {
-//   console.log(new Date(), req.method, req.path);
-//   next();
-// });
 
 // set up route
 app.use('/', authRouter);
@@ -80,12 +58,9 @@ app.use('/dashboard', ensureAuthenticated, (req, res) => {
 
 app.use(express.static('public'));
 
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-const post = 3000;
+app.use('*', (req, res) => {
+  res.send('not found');
+});
+const post = 3001;
 
 app.listen(post, () => console.log(`listenning on port ${post}`));

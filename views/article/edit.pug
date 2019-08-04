@@ -15,7 +15,7 @@ block content
         .form-group
           label(for='images') Images
           input#images.form-control(type='file', name='images', placeholder='Enter Title')
-          input(name='image_old' value=article.images)
+          input(type='hidden' name='image_old' value=article.images)
         .form-group
           label(for='password') Description
           input#password.form-control(type='text', name='description', value= article.description)
