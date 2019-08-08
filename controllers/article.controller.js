@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
-const User = mongoose.model('User');
-const Article = require('../models/article.model');
 const slug = require('slug');
 const moment = require('moment');
+const Article = require('../models/article.model');
+const Category = require('../models/category.model');
 
-module.exports.getAll = async function (req, res) {
+module.exports.getAll = async function(req, res) {
   var articles = await Article.find().populate('author');
   var page = parseInt(req.query.page || 1);
   var perPage = 3;
@@ -58,7 +57,7 @@ module.exports.saveCreate = (req, res) => {
     body: body,
     description: description,
     images: images,
-    author: req.user
+    author: req.user._id
   });
 
   article
@@ -71,7 +70,7 @@ module.exports.saveCreate = (req, res) => {
 
 module.exports.edit = async (req, res) => {
   var article = await Article.findById({ _id: req.params.article });
-  if (article.author === req.user._id) {
+  if (article.author.toJSON() !== req.user._id.toJSON()) {
     req.flash('error_msg', 'Not Authorzed');
     res.redirect('/theads');
   }
@@ -106,7 +105,7 @@ module.exports.saveEdit = (req, res) => {
 };
 
 module.exports.remove = (req, res) => {
-  if (req.article.author === req.user._id) {
+  if (req.article.author.toJSON() !== req.user._id.toJSON()) {
     req.flash('error_msg', 'Not Authorzed');
     res.redirect('/theads');
   } else {
