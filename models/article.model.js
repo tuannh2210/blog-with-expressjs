@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const slug = require('slug');
-const User = mongoose.model('User');
 
 const Schema = mongoose.Schema;
 
@@ -19,6 +18,10 @@ const ArticleSchema = new Schema(
     images: String,
     description: String,
     body: String,
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category'
+    },
     tagList: [
       {
         type: String

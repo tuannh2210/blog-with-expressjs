@@ -5,13 +5,11 @@ const path = require('path');
 const controller = require('../controllers/article.controller');
 const { ensureAuthenticated } = require('../middlewares/auth.middleware');
 
-const mongoose = require('mongoose');
-const User = mongoose.model('User');
 const Article = require('../models/article.model');
 
 const storage = multer.diskStorage({
   destination: './public/uploads/',
-  filename: function (req, file, cb) {
+  filename: function(req, file, cb) {
     cb(
       null,
       file.fieldname + '-' + Date.now() + path.extname(file.originalname)
@@ -21,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limit: { fileSize: 1000000 },
-  fileFilter: function (req, file, cb) {
+  fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
 });
@@ -66,7 +64,7 @@ router.post(
 router.get('/remove/:article', ensureAuthenticated, controller.remove);
 
 // get theo tên param
-router.param('article', function (req, res, next, articleId) {
+router.param('article', function(req, res, next, articleId) {
   Article.findById(articleId)
     .then(article => {
       if (!article) res.sendStatus(404);

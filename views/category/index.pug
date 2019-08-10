@@ -1,0 +1,32 @@
+extends ../layout/admin
+block title 
+  | List article
+block content
+  h1.text-center.m-3  All list article
+  table.table.col-10(border=1)
+    col
+    col(width = '' )
+    col(width = '300')
+    col
+    tr
+      th #
+      th Name
+      th Description
+      th 
+        a(href="cates/create") Create
+    tr
+    - var i = 0
+    each cate in cates
+      tr
+        td= ++i
+        td= cate.name
+        td= cate.slug
+        td
+          a.btn.btn-info(href= '/cates/edit/' + cate._id)
+            i(class="far fa-edit")
+          a.btn.btn-danger(href='/cates/remove/' + cate._id)
+              i(class="far fa-trash-alt")
+      tr
+  include ../partials/pagination
+
+
