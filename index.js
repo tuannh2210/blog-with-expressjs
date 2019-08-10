@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
-
 const { ensureAuthenticated } = require('./middlewares/auth.middleware');
 const logger = require('./middlewares/logger.middleware');
 const session = require('./middlewares/session.middleware');
@@ -16,13 +15,11 @@ require('./config/passport')(passport);
 
 app.use(logger);
 //connet mongoose
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log(`Connetion mongodb successfull`))
-  .catch(err => console.log('Connetion error'));
+mongoose.connect(process.env.MONGO_URL);
 // routes
 const authRouter = require('./routes/auth.route');
 const articleRouter = require('./routes/article.route');
+const categoryRouter = require('./routes/category.route');
 
 // pug template
 app.set('view engine', 'pug');
@@ -51,6 +48,7 @@ app.use((req, res, next) => {
 // set up route
 app.use('/', authRouter);
 app.use('/theads', articleRouter);
+app.use('/cates', categoryRouter);
 
 app.use('/dashboard', ensureAuthenticated, (req, res) => {
   res.render('dashboard');
@@ -61,6 +59,7 @@ app.use(express.static('public'));
 app.use('*', (req, res) => {
   res.send('not found');
 });
+
 const post = 3001;
 
 app.listen(post, () => console.log(`listenning on port ${post}`));

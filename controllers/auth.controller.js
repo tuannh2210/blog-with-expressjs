@@ -1,7 +1,6 @@
 const User = require('../models/user.model');
 const Token = require('../models/token.model');
 const bcrypt = require('bcryptjs');
-var crypto = require('crypto');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
 
@@ -41,7 +40,7 @@ module.exports.registerPost = async (req, res, next) => {
     .then(() => {
       var token = new Token({
         _userId: user._id,
-        token: crypto.randomBytes(16).toString('hex')
+        token: bcrypt.genSaltSync(16).toString('hex')
       });
 
       token.save(function(err) {
@@ -133,7 +132,7 @@ module.exports.resendTokenPost = (req, res, next) => {
     // Create a verification token, save it, and send email
     var token = new Token({
       _userId: user._id,
-      token: crypto.randomBytes(16).toString('hex')
+      token: bcrypt.genSaltSync(16).toString('hex')
     });
 
     // Save the token

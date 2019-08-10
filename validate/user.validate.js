@@ -36,23 +36,19 @@ module.exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const errors = [];
 
-  const user = await User.findOne({
-    email: email
-  });
+  const user = await User.findOne({ email: email });
 
-  // res.json({ user });
+  if (!user || !password) {
+    errors.push({ msg: 'Enter email and password' });
+  }
+
+  const isVerified = user.isVerified;
+
   const comparePassword = pwd => {
     return bcrypt.compareSync(pwd, user.password);
   };
 
-  // res.json({ email: email, password: comparePassword(password) });
-  const isVerified = await User.findOne({ email: email, isVerified: true });
-
-  if (!email || !password) {
-    errors.push({ msg: 'Enter email and password' });
-  }
-
-  if (!user && !comparePassword(password)) {
+  if (!user || !comparePassword(password)) {
     errors.push({
       msg: 'Invalid email or password'
     });

@@ -24,7 +24,7 @@ module.exports.detail = async (req, res) => {
 
   const date = moment(article.createdAt).format('DD/MM/YYYY');
   const pageViewCount = article.view;
-  const conunt = parseInt(pageViewCount + 1) || 0;
+  const conunt = parseInt(pageViewCount + 1) || 1;
 
   Article.update({ slug: req.params.slug }, { view: conunt }).then(() =>
     res.render('article/detail', {
@@ -53,10 +53,10 @@ module.exports.saveCreate = (req, res) => {
   const { title, body, description, images } = req.body;
 
   const article = new Article({
-    title: title,
-    body: body,
-    description: description,
-    images: images,
+    title,
+    body,
+    description,
+    images,
     author: req.user._id
   });
 
@@ -91,15 +91,15 @@ module.exports.saveEdit = (req, res) => {
   }
   const { title, body, description, images } = req.body;
   const data = {
-    title: title,
-    body: body,
-    description: description,
-    images: images,
+    title,
+    body,
+    description,
+    images,
     author: req.user,
     slug: slug(title) + '-' + ((Math.random() * Math.pow(36, 6)) | 0)
   };
 
-  Article.findByIdAndUpdate({ _id: req.params.article }, data)
+  Article.findByIdAndUpdate(req.params.article, data)
     .then(() => res.redirect('/theads'))
     .catch(err => res.json(err));
 };

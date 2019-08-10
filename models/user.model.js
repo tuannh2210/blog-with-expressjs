@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
 
 const Schema = mongoose.Schema;
 
@@ -20,10 +19,8 @@ const UserSchema = new Schema(
 );
 
 UserSchema.methods.setPassword = password => {
-  let salt = crypto.randomBytes(16).toString('hex');
-  this.password = crypto
-    .pbkdf2Sync(password, salt, 10000, 512, 'sha512')
-    .toString('hex');
+  const salt = bcrypt.genSaltSync(16).toString('hex');
+  this.password = bcrypt.hashSync(password, salt);
 };
 
 UserSchema.methods.comparePassword = function(pwd) {

@@ -4,10 +4,12 @@ block title
 block content
   h1.text-center.m-3  All list article
   table.table.col-10(border=1)
-    col
+    col(width = '50')
     col(width = '' )
     col(width = '300')
-    col
+    col(width = '200')
+    col(width = '500')
+    col(width = '')
     tr
       th #
       th Author
@@ -27,7 +29,7 @@ block content
         td
           a(href=`${article.images}`)
             img(src=article.images, alt=article.title, width='100px')
-        td= article.description
+        td= article.description.split(' ').splice(0,30).join(' ')
         td
           a.btn.btn-info(href= '/theads/edit/' + article._id)
             i(class="far fa-edit")
