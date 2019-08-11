@@ -17,7 +17,7 @@ block content
       th Images
       th Description
       th 
-        a(href="/theads/create") Create
+        a(href="/posts/create") Create
     tr
     - var i = 0
     each article in articles
@@ -25,15 +25,15 @@ block content
         td= ++i
         td= article.author.username
         td
-          a(href= '/theads/' + article.slug)=  article.title
+          a(href= '/posts/' + article.slug)=  article.title
         td
           a(href=`${article.images}`)
             img(src=article.images, alt=article.title, width='100px')
         td= article.description.split(' ').splice(0,30).join(' ')
         td
-          a.btn.btn-info(href= '/theads/edit/' + article._id)
+          a.btn.btn-info(href= '/posts/edit/' + article._id)
             i(class="far fa-edit")
-          a.btn.btn-danger(href='/theads/remove/' + article._id)
+          a.btn.btn-danger(href='/posts/remove/' + article._id)
               i(class="far fa-trash-alt")
   include ../partials/pagination
 

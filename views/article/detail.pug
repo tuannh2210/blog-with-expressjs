@@ -17,23 +17,23 @@ block content
       th Date
       th View
       th 
-        a(href="/theads/create") Create
+        a(href="/posts/create") Create
     tr
     - var i = 0
     tr
       td= ++i
       td= article.author.username
       td
-        a(href= '/theads/' + article.slug)=  article.title
+        a(href= '/posts/' + article.slug)=  article.title
       td
         img(src='/'+article.images, alt=article.title, width='100px')
       td= article.description
       td= date
       td= conunt
       td
-        a.btn.btn-info(href= '/theads/edit/' + article._id)
+        a.btn.btn-info(href= '/posts/edit/' + article._id)
           i(class="far fa-edit")
-        a.btn.btn-danger(href='/theads/remove/' + article._id)
+        a.btn.btn-danger(href='/posts/remove/' + article._id)
             i(class="far fa-trash-alt")
   include ../partials/pagination
 

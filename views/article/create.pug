@@ -3,11 +3,16 @@ block title
   | Create new post
 block content
   .row.mt-5
-  .col-md-5.m-auto
+  .col-lg-5.col-md-8.m-auto
       h1.text-center.mb-3 Create new post
       include ../partials/messages
       p= message
-      form(action='/theads/create', method='POST'  enctype="multipart/form-data")
+      form(action='/posts/create', method='POST'  enctype="multipart/form-data")
+        .form-group
+          label(for='category') Category
+          select#category.form-control(name='category')
+            each cate in cates
+              option(value=cate._id)=cate.name
         .form-group
           label(for='Title') Title
           input#title.form-control(type='text', name='title', placeholder='Enter Title')
