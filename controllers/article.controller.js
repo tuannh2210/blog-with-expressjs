@@ -4,18 +4,20 @@ const Article = require('../models/article.model');
 const Category = require('../models/category.model');
 
 module.exports.getAll = async function(req, res) {
-  var articles = await Article.find()
+  var page = parseInt(req.query.page || 1);
+  var search = req.query.search || '';
+  var perPage = 3;
+  var articles = await Article.find({ title: { $regex: '.*' + search + '.*' } })
     .populate('author')
     .sort({ _id: -1 });
-  var page = parseInt(req.query.page || 1);
-  var perPage = 3;
   var totalPage = Math.ceil(articles.length / perPage);
   var start = (page - 1) * perPage;
   var end = page * perPage;
   res.render('article/index', {
     articles: articles.slice(start, end),
-    page: page,
-    totalPage: totalPage
+    page,
+    totalPage,
+    search
   });
 };
 

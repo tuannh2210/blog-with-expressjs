@@ -10,17 +10,18 @@ const storage = multer.diskStorage({
     );
   }
 });
-
 const upload = multer({
   storage: storage,
   limit: { fileSize: 1000000 },
-  fileFilter: (req, file, cb) => {
+  fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
 });
 
 function checkFileType(file, cb) {
-  const filetypes = /jpeg | jpg | png | gif/;
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   // Check mime
   const mimetype = filetypes.test(file.mimetype);
@@ -31,4 +32,5 @@ function checkFileType(file, cb) {
     cb('Error: Images Only!');
   }
 }
+
 module.exports = upload;

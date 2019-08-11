@@ -3,16 +3,19 @@ const Article = require('../models/article.model');
 const slug = require('slug');
 
 module.exports.getAll = async (req, res) => {
-  var cates = await Category.find();
   var page = parseInt(req.query.page || 1);
+  var search = req.query.search || '';
   var perPage = 3;
+
+  var cates = await Category.find({ name: { $regex: '.*' + search + '.*' } });
   var totalPage = Math.ceil(cates.length / perPage);
   var start = (page - 1) * perPage;
   var end = page * perPage;
   res.render('category/index', {
     cates: cates.slice(start, end),
-    page: page,
-    totalPage: totalPage
+    page,
+    totalPage,
+    search
   });
 };
 
