@@ -4,7 +4,9 @@ const Article = require('../models/article.model');
 const Category = require('../models/category.model');
 
 module.exports.getAll = async function(req, res) {
-  var articles = await Article.find().populate('author');
+  var articles = await Article.find()
+    .populate('author')
+    .sort({ _id: -1 });
   var page = parseInt(req.query.page || 1);
   var perPage = 3;
   var totalPage = Math.ceil(articles.length / perPage);
@@ -35,8 +37,9 @@ module.exports.detail = async (req, res) => {
   );
 };
 
-module.exports.create = (req, res) => {
-  res.render('article/create');
+module.exports.create = async (req, res) => {
+  const cates = await Category.find();
+  res.render('article/create', { cates });
 };
 
 module.exports.saveCreate = (req, res) => {
@@ -50,32 +53,37 @@ module.exports.saveCreate = (req, res) => {
       .join('/'));
   }
 
-  const { title, body, description, images } = req.body;
+  const { title, body, description, images, category } = req.body;
 
   const article = new Article({
     title,
     body,
     description,
     images,
+    category,
     author: req.user._id
   });
-
   article
     .save()
     .then(() => {
-      res.redirect('/theads');
+      res.redirect('/posts');
     })
     .catch(err => res.send(err.message));
 };
 
 module.exports.edit = async (req, res) => {
-  var article = await Article.findById({ _id: req.params.article });
+  const article = await Article.findById(req.params.article).populate(
+    'category'
+  );
+  const cates = await Category.find();
+
   if (article.author.toJSON() !== req.user._id.toJSON()) {
     req.flash('error_msg', 'Not Authorzed');
-    res.redirect('/theads');
+    res.redirect('/posts');
   }
   res.render('article/edit', {
-    article: req.article
+    article: article,
+    cates
   });
 };
 
@@ -89,30 +97,31 @@ module.exports.saveEdit = (req, res) => {
   } else {
     req.body.images = req.body.image_old;
   }
-  const { title, body, description, images } = req.body;
+  const { title, body, description, images, category } = req.body;
   const data = {
     title,
     body,
     description,
     images,
+    category,
     author: req.user,
     slug: slug(title) + '-' + ((Math.random() * Math.pow(36, 6)) | 0)
   };
 
   Article.findByIdAndUpdate(req.params.article, data)
-    .then(() => res.redirect('/theads'))
+    .then(() => res.redirect('/posts'))
     .catch(err => res.json(err));
 };
 
 module.exports.remove = (req, res) => {
   if (req.article.author.toJSON() !== req.user._id.toJSON()) {
     req.flash('error_msg', 'Not Authorzed');
-    res.redirect('/theads');
+    res.redirect('/posts');
   } else {
     Article.remove({
       _id: req.params.article
     })
-      .then(() => res.redirect('/theads'))
+      .then(() => res.redirect('/posts'))
       .catch(err => res.json(err));
   }
 };

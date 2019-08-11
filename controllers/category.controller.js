@@ -1,4 +1,5 @@
 const Category = require('../models/category.model');
+const Article = require('../models/article.model');
 const slug = require('slug');
 
 module.exports.getAll = async (req, res) => {
@@ -13,6 +14,16 @@ module.exports.getAll = async (req, res) => {
     page: page,
     totalPage: totalPage
   });
+};
+
+module.exports.detail = async (req, res) => {
+  const slug = req.params.slug;
+  const cate = await Category.findOne({ slug: slug });
+  const articles = await Article.find({ category: cate._id }).populate([
+    'author',
+    'category'
+  ]);
+  res.render('category/article', { articles: articles });
 };
 
 module.exports.create = (req, res) => {

@@ -46,8 +46,11 @@ app.use((req, res, next) => {
 });
 
 // set up route
+app.get('/', (req, res) => {
+  res.send("<a href='login'>login</a>");
+});
 app.use('/', authRouter);
-app.use('/theads', articleRouter);
+app.use('/posts', articleRouter);
 app.use('/cates', categoryRouter);
 
 app.use('/dashboard', ensureAuthenticated, (req, res) => {
@@ -57,7 +60,7 @@ app.use('/dashboard', ensureAuthenticated, (req, res) => {
 app.use(express.static('public'));
 
 app.use('*', (req, res) => {
-  res.send('not found');
+  res.send('không tbaays');
 });
 
 const post = 3001;

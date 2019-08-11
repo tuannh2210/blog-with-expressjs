@@ -1,8 +1,8 @@
 extends ../layout/admin
 block title 
-  | List article
+  | List category
 block content
-  h1.text-center.m-3  All list article
+  h1.text-center.m-3  All list category
   table.table.col-10(border=1)
     col
     col(width = '' )
@@ -19,7 +19,8 @@ block content
     each cate in cates
       tr
         td= ++i
-        td= cate.name
+        td
+          a(href='/cates/' + cate.slug)= cate.name
         td= cate.slug
         td
           a.btn.btn-info(href= '/cates/edit/' + cate._id)

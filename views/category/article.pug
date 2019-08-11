@@ -1,0 +1,40 @@
+extends ../layout/admin
+block title 
+  | List article
+block content
+  h1.text-center.m-3  All list article
+  table.table.col-10(border=1)
+    col(width = '50')
+    col(width = '' )
+    col(width = '300')
+    col(width = '200')
+    col(width = '500')
+    col(width = '')
+    tr
+      th #
+      th Author
+      th Title
+      th Images
+      th Description
+      th 
+        a(href="/posts/create") Create
+    tr
+    - var i = 0
+    each article in articles
+      tr
+        td= ++i
+        td= article.author.username
+        td
+          a(href= '/posts/' + article.slug)=  article.title
+        td
+          a(href=`/${article.images}`)
+            img(src='/' + article.images, alt=article.title, width='100px')
+        td= article.description.split(' ').splice(0,30).join(' ')
+        td
+          a.btn.btn-info(href= '/posts/edit/' + article._id)
+            i(class="far fa-edit")
+          a.btn.btn-danger(href='/posts/remove/' + article._id)
+              i(class="far fa-trash-alt")
+  include ../partials/pagination
+
+

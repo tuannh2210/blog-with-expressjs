@@ -8,6 +8,8 @@ const Category = require('../models/category.model');
 
 router.get('/', controller.getAll);
 
+router.get('/:slug', controller.detail);
+
 router.get('/create', controller.create);
 
 router.post('/create', ensureAuthenticated, controller.saveCreate);
