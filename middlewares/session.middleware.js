@@ -1,5 +1,5 @@
 const expressSession = require('express-session');
-const FileStore = require('session-file-store')(expressSession);
+const MongoStore = require('connect-mongo')(expressSession);
 
 const IN_PROD = process.env.NODE_ENV === 'production';
 const MILLISECONDS_IN_A_HOUSE = 1000 * 60 * 60;
@@ -8,7 +8,9 @@ const TIME = MILLISECONDS_IN_A_HOUSE * (2 + GMT);
 
 const session = (req, res, next) => {
   return expressSession({
-    store: new FileStore(),
+    store: new MongoStore({
+      url: process.env.MONGO_URL
+    }),
     name: 'sessionId',
     secret: 'SESS_SECRET',
     resave: false,
