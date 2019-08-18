@@ -12,7 +12,7 @@ block content
         .form-group
           label(for='category') Category
           select#category.form-control(name='category')
-            option(value=article.category selected)=article.category.name
+            option(value=article.category._id selected)=article.category.name
             each cate in cates
               option(value=cate._id )=cate.name
             

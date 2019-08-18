@@ -33,6 +33,8 @@
     "validator": "^10.11.0"
   },
   "devDependencies": {
+    "@editorjs/editorjs": "^2.15.0",
+    "@editorjs/header": "^2.3.0",
     "nodemon": "^1.19.1"
   }
 }

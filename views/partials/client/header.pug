@@ -1,0 +1,141 @@
+header
+  //- Header desktop
+  .container-menu-desktop
+    .topbar
+      .content-topbar.container.h-100
+        .left-topbar
+          span.left-topbar-item.flex-wr-s-c
+            span
+              | New York, NY
+            img.m-b-1.m-rl-8(src='images/icons/icon-night.png', alt='IMG')
+            span
+              | HI 58&deg; LO 56&deg;
+          a.left-topbar-item(href='#')
+            | About
+          a.left-topbar-item(href='#')
+            | Contact
+          a.left-topbar-item(href='#')
+            | Sign up
+          a.left-topbar-item(href='#')
+            | Log in
+        .right-topbar
+          a(href='#')
+            span.fab.fa-facebook-f
+          a(href='#')
+            span.fab.fa-twitter
+          a(href='#')
+            span.fab.fa-pinterest-p
+          a(href='#')
+            span.fab.fa-vimeo-v
+          a(href='#')
+            span.fab.fa-youtube
+    //- Header Mobile
+    .wrap-header-mobile
+      //- Logo moblie
+      .logo-mobile
+        a(hsiref='index.html')
+          img(src='images/icons/logo-01.png', alt='IMG-LOGO')
+      //- Button show menu
+      .btn-show-menu-mobile.hamburger.hamburger--squeeze.m-r--8
+        span.hamburger-box
+          span.hamburger-inner
+    //- Menu Mobile
+    .menu-mobile
+      ul.topbar-mobile
+        li.left-topbar
+          span.left-topbar-item.flex-wr-s-c
+            span
+              | New York, NY
+            img.m-b-1.m-rl-8(src='images/icons/icon-night.png', alt='IMG')
+            span
+              | HI 58&deg; LO 56&deg;
+        li.left-topbar
+          a.left-topbar-item(href='#')
+            | About
+          a.left-topbar-item(href='#')
+            | Contact
+          a.left-topbar-item(href='#')
+            | Sign up
+          a.left-topbar-item(href='#')
+            | Log in
+        li.right-topbar
+          a(href='#')
+            span.fab.fa-facebook-f
+          a(href='#')
+            span.fab.fa-twitter
+          a(href='#')
+            span.fab.fa-pinterest-p
+          a(href='#')
+            span.fab.fa-vimeo-v
+          a(href='#')
+            span.fab.fa-youtube
+      ul.main-menu-m
+        li
+          a(href='index.html') Home
+          span.arrow-main-menu-m
+            //- i.fa.fa-angle-right(aria-hidden='true')
+        li
+          a(href='category-01.html') News
+    //- 
+    .wrap-logo.container
+      //- Logo desktop
+      .logo
+        a(href='index.html')
+          img(src='images/icons/logo-01.png', alt='LOGO')
+      //- Banner
+      .banner-header
+        a(href='#')
+          img(src='images/banner-01.jpg', alt='IMG')
+    //- 
+    .wrap-main-nav
+      .main-nav
+        //- Menu desktop
+        nav.menu-desktop
+          a.logo-stick(href='index.html')
+            img(src='images/icons/logo-01.png', alt='LOGO')
+          ul.main-menu
+            li.main-menu-active
+              a(href='index.html') Home
+            li.mega-menu-item
+              a(href='category-01.html') News
+              .sub-mega-menu
+                .nav.flex-column.nav-pills(role='tablist')
+                  a.nav-link.active(data-toggle='pill', href='#news-0', role='tab') All
+                  a.nav-link(data-toggle='pill', href='#news-1', role='tab') Entertaiment
+                .tab-content
+                  #news-0.tab-pane.show.active(role='tabpanel')
+                    .row
+                      .col-3
+                        //- Item post
+                        div
+                          a.wrap-pic-w.hov1.trans-03(href='blog-detail-01.html')
+                            img(src='images/post-05.jpg', alt='IMG')
+                          .p-t-10
+                            h5.p-b-5
+                              a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-01.html')
+                                | Donec metus orci, malesuada et lectus vitae
+                            span.cl8
+                              a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+                                | Music
+                              span.f1-s-3.m-rl-3
+                                | -
+                              span.f1-s-3
+                                | Feb 18
+                  #news-1.tab-pane(role='tabpanel')
+                    .row
+                      .col-3
+                        //- Item post
+                        div
+                          a.wrap-pic-w.hov1.trans-03(href='blog-detail-01.html')
+                            img(src='images/post-06.jpg', alt='IMG')
+                          .p-t-10
+                            h5.p-b-5
+                              a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-01.html')
+                                | Donec metus orci, malesuada et lectus vitae
+                            span.cl8
+                              a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+                                | Music
+                              span.f1-s-3.m-rl-3
+                                | -
+                              span.f1-s-3
+                                | Jan 15

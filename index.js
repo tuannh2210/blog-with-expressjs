@@ -45,19 +45,19 @@ app.use((req, res, next) => {
   next();
 });
 
-// set up route
-app.get('/', (req, res) => {
-  res.send("<a href='login'>login</a>");
-});
+// // set up route
+// app.get('/', (req, res) => {
+//   res.send("<a href='login'>login</a>");
+// });
 app.use('/', authRouter);
 app.use('/posts', articleRouter);
 app.use('/cates', categoryRouter);
 
-app.use('/dashboard', ensureAuthenticated, (req, res) => {
-  res.render('dashboard');
-});
-
 app.use(express.static('public'));
+
+app.use('/', ensureAuthenticated, (req, res) => {
+  res.render('layout/client.pug');
+});
 
 app.use('*', (req, res) => {
   res.send('không tbaays');
