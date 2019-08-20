@@ -61,4 +61,4 @@ app.use('*', (req, res) => {
 
 const port = process.env.PORT || 3001;
 
-app.listen(post, () => console.log(`listenning on port ${port}`));
+app.listen(port, () => console.log(`listenning on port ${port}`));
