@@ -59,6 +59,6 @@ app.use('*', (req, res) => {
   res.send('Not found');
 });
 
-const post = 3001;
+const port = process.env.PORT || 3001;
 
-app.listen(post, () => console.log(`listenning on port ${post}`));
+app.listen(post, () => console.log(`listenning on port ${port}`));
