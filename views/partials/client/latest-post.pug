@@ -6,22 +6,21 @@ section.bg0.p-t-60.p-b-35
           h3.f1-m-2.cl3.tab01-title
             | Latest Articles
         .row.p-t-35
-          .col-sm-6.p-r-25.p-r-15-sr991
-            //-Item latest
-            .m-b-45
-              a.wrap-pic-w.hov1.trans-03(href='blog-detail-01.html')
-                img(src='images/latest-01.jpg', alt='IMG')
-              .p-t-16
-                h5.p-b-5
-                  a.f1-m-3.cl2.hov-cl10.trans-03(href='blog-detail-01.html')
-                    | You wish lorem ipsum dolor sit amet consectetur
-                span.cl8
-                  a.f1-s-4.cl8.hov-cl10.trans-03(href='#')
-                    | by John Alvarado
-                  span.f1-s-3.m-rl-3
-                    | -
-                  span.f1-s-3
-                    | Feb 18
+          each article in articles
+            .col-sm-6.p-r-25.p-r-15-sr991
+              //-Item latest
+              .m-b-45
+                div(style='height:220px;position: relative;')
+                  a.wrap-pic-w.hov1.trans-03(href='article.slug')
+                    img(src=article.images, alt='IMG')
+                .p-t-16
+                  h5.p-b-5
+                    a.f1-m-3.cl2.hov-cl10.trans-03(href=article.images)= article.title
+                  span.cl8
+                    a.f1-s-4.cl8.hov-cl10.trans-03(href='#')= article.category.name
+                    span.f1-s-3.m-rl-3
+                      | -
+                    span.f1-s-3= moment(article.createdAt).format('MMM DD')
       .col-md-10.col-lg-4
         .p-l-10.p-rl-0-sr991.p-b-20
           //-Video
@@ -30,11 +29,13 @@ section.bg0.p-t-60.p-b-35
               h3.f1-m-2.cl3.tab01-title
                 | Most Popular
             ul.p-t-35
+              - let i = 1
+            each article in popular
               li.flex-wr-sb-s.p-b-22
                 .size-a-8.flex-c-c.borad-3.size-a-8.bg9.f1-m-4.cl0.m-b-6
-                  | 1
+                  = i++
                 a.size-w-3.f1-s-7.cl3.hov-cl10.trans-03(href='#')
-                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  = article.title
           
           //-Tag
           .p-b-55

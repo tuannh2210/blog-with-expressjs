@@ -63,7 +63,8 @@ module.exports.saveCreate = (req, res) => {
     description,
     images,
     category,
-    author: req.user._id
+    author: req.user._id,
+    view: 1
   });
   article
     .save()
@@ -81,7 +82,7 @@ module.exports.edit = async (req, res) => {
 
   if (article.author.toJSON() !== req.user._id.toJSON()) {
     req.flash('error_msg', 'Not Authorzed');
-    res.redirect('/posts');
+    res.redirect('back');
   }
   res.render('article/edit', {
     article: article,
@@ -106,7 +107,7 @@ module.exports.saveEdit = (req, res) => {
     description,
     images,
     category,
-    author: req.user,
+    author: req.user._id,
     slug: slug(title) + '-' + ((Math.random() * Math.pow(36, 6)) | 0)
   };
 
@@ -118,7 +119,7 @@ module.exports.saveEdit = (req, res) => {
 module.exports.remove = (req, res) => {
   if (req.article.author.toJSON() !== req.user._id.toJSON()) {
     req.flash('error_msg', 'Not Authorzed');
-    res.redirect('/posts');
+    res.redirect('back');
   } else {
     Article.remove({
       _id: req.params.article

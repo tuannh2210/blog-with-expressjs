@@ -1,0 +1,230 @@
+.container
+  .headline.bg0.flex-wr-sb-c.p-rl-20.p-tb-8
+    .f2-s-1.p-r-30.m-tb-6
+      a.breadcrumb-item.f1-s-3.cl9(href='index.html')
+        | Home
+      //- a.breadcrumb-item.f1-s-3.cl9(href='blog-list-01.html')
+      //-   | Blog
+      span.breadcrumb-item.f1-s-3.cl9
+        = article.title
+
+    .pos-relative.size-a-2.bo-1-rad-22.of-hidden.bocl11.m-tb-6
+      input.f1-s-1.cl6.plh9.s-full.p-l-25.p-r-45(type='text', name='search', placeholder='Search')
+      button.flex-c-c.size-a-1.ab-t-r.fs-20.cl2.hov-cl10.trans-03
+        i.zmdi.zmdi-search
+//-Content
+section.bg0.p-b-140.p-t-10
+  .container
+    .row.justify-content-center
+      .col-md-10.col-lg-8.p-b-30
+        .p-r-10.p-r-0-sr991
+          //-Blog Detail
+          .p-b-70
+            a.f1-s-10.cl2.hov-cl10.trans-03.text-uppercase(href='#')
+              = article.category.name
+            h3.f1-l-3.cl2.p-b-16.p-t-33.respon2
+              = article.title
+            .flex-wr-s-s.p-b-40
+              span.f1-s-3.cl8.m-r-15
+                a.f1-s-4.cl8.hov-cl10.trans-03(href='#')
+                  =article.author.username
+                span.m-rl-3 -
+                span
+                  | Feb 18
+              span.f1-s-3.cl8.m-r-15
+                =article.view + ' view'
+              a.f1-s-3.cl8.hov-cl10.trans-03.m-r-15(href='#')
+                | 0 Comment
+            .wrap-pic-max-w.p-b-30
+              img(src=article.images, alt='IMG' Style='width:100%')
+            p.f1-s-11.cl6.p-b-25
+              =article.description
+            p.f1-s-11.cl6.p-b-25
+              =article.body
+            //-Tag
+            .flex-s-s.p-t-12.p-b-15
+              span.f1-s-12.cl5.m-r-8
+                | Tags:
+              .flex-wr-s-s.size-w-0
+                a.f1-s-12.cl8.hov-link1.m-r-15(href='#')
+                  | Streetstyle
+                a.f1-s-12.cl8.hov-link1.m-r-15(href='#')
+                  | Crafts
+            //-Share
+            .flex-s-s
+              span.f1-s-12.cl5.p-t-1.m-r-15
+                | Share:
+              .flex-wr-s-s.size-w-0
+                a.dis-block.f1-s-13.cl0.bg-facebook.borad-3.p-tb-4.p-rl-18.hov-btn1.m-r-3.m-b-3.trans-03(href='#')
+                  i.fab.fa-facebook-f.m-r-7
+                  | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Facebook
+                a.dis-block.f1-s-13.cl0.bg-twitter.borad-3.p-tb-4.p-rl-18.hov-btn1.m-r-3.m-b-3.trans-03(href='#')
+                  i.fab.fa-twitter.m-r-7
+                  | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Twitter
+                a.dis-block.f1-s-13.cl0.bg-google.borad-3.p-tb-4.p-rl-18.hov-btn1.m-r-3.m-b-3.trans-03(href='#')
+                  i.fab.fa-google-plus-g.m-r-7
+                  | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Google+
+                a.dis-block.f1-s-13.cl0.bg-pinterest.borad-3.p-tb-4.p-rl-18.hov-btn1.m-r-3.m-b-3.trans-03(href='#')
+                  i.fab.fa-pinterest-p.m-r-7
+                  | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Pinterest
+          //-Leave a comment
+          div
+            h4.f1-l-4.cl3.p-b-12
+              | Leave a Comment
+            p.f1-s-13.cl8.p-b-40
+              | Your email address will not be published. Required fields are marked *
+            form
+              textarea.bo-1-rad-3.bocl13.size-a-15.f1-s-13.cl5.plh6.p-rl-18.p-tb-14.m-b-20(name='msg', placeholder='Comment...')
+              input.bo-1-rad-3.bocl13.size-a-16.f1-s-13.cl5.plh6.p-rl-18.m-b-20(type='text', name='name', placeholder='Name*')
+              input.bo-1-rad-3.bocl13.size-a-16.f1-s-13.cl5.plh6.p-rl-18.m-b-20(type='text', name='email', placeholder='Email*')
+              input.bo-1-rad-3.bocl13.size-a-16.f1-s-13.cl5.plh6.p-rl-18.m-b-20(type='text', name='website', placeholder='Website')
+              button.size-a-17.bg2.borad-3.f1-s-12.cl0.hov-btn1.trans-03.p-rl-15.m-t-10
+                | Post Comment
+      //-Sidebar
+      .col-md-10.col-lg-4.p-b-30
+        .p-l-10.p-rl-0-sr991.p-t-70
+          //-Category
+          .p-b-60
+            .how2.how2-cl4.flex-s-c
+              h3.f1-m-2.cl3.tab01-title
+                | Category
+            ul.p-t-35
+              li.how-bor3.p-rl-4
+                a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href='#')
+                  | Fashion
+              li.how-bor3.p-rl-4
+                a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href='#')
+                  | Beauty
+              li.how-bor3.p-rl-4
+                a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href='#')
+                  | Street Style
+              li.how-bor3.p-rl-4
+                a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href='#')
+                  | Life Style
+              li.how-bor3.p-rl-4
+                a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href='#')
+                  | DIY &amp; Crafts
+          //-Archive
+          .p-b-37
+            .how2.how2-cl4.flex-s-c
+              h3.f1-m-2.cl3.tab01-title
+                | Archive
+            ul.p-t-32
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | July 2018
+                  span
+                    | (9)
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | June 2018
+                  span
+                    | (39)
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | May 2018
+                  span
+                    | (29)
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | April  2018
+                  span
+                    | (35)
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | March 2018
+                  span
+                    | (22)
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | February 2018
+                  span
+                    | (32)
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | January 2018
+                  span
+                    | (21)
+              li.p-rl-4.p-b-19
+                a.flex-wr-sb-c.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03(href='#')
+                  span
+                    | December 2017
+                  span
+                    | (26)
+          //-Popular Posts
+          .p-b-30
+            .how2.how2-cl4.flex-s-c
+              h3.f1-m-2.cl3.tab01-title
+                | Popular Post
+            ul.p-t-35
+              li.flex-wr-sb-s.p-b-30
+                a.size-w-10.wrap-pic-w.hov1.trans-03(href='#')
+                  img(src='images/popular-post-04.jpg', alt='IMG')
+                .size-w-11
+                  h6.p-b-4
+                    a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-02.html')
+                      | Donec metus orci, malesuada et lectus vitae
+                  span.cl8.txt-center.p-b-24
+                    a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+                      | Music
+                    span.f1-s-3.m-rl-3
+                      | -
+                    span.f1-s-3
+                      | Feb 18
+              li.flex-wr-sb-s.p-b-30
+                a.size-w-10.wrap-pic-w.hov1.trans-03(href='#')
+                  img(src='images/popular-post-05.jpg', alt='IMG')
+                .size-w-11
+                  h6.p-b-4
+                    a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-02.html')
+                      | Donec metus orci, malesuada et lectus vitae
+                  span.cl8.txt-center.p-b-24
+                    a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+                      | Game
+                    span.f1-s-3.m-rl-3
+                      | -
+                    span.f1-s-3
+                      | Feb 16
+              li.flex-wr-sb-s.p-b-30
+                a.size-w-10.wrap-pic-w.hov1.trans-03(href='#')
+                  img(src='images/popular-post-06.jpg', alt='IMG')
+                .size-w-11
+                  h6.p-b-4
+                    a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-02.html')
+                      | Donec metus orci, malesuada et lectus vitae
+                  span.cl8.txt-center.p-b-24
+                    a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+                      | Celebrity
+                    span.f1-s-3.m-rl-3
+                      | -
+                    span.f1-s-3
+                      | Feb 12
+          //-Tag
+          div
+            .how2.how2-cl4.flex-s-c.m-b-30
+              h3.f1-m-2.cl3.tab01-title
+                | Tags
+            .flex-wr-s-s.m-rl--5
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | Fashion
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | Lifestyle
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | Denim
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | Streetstyle
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | Crafts
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | Magazine
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | News
+              a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+                | Blogs

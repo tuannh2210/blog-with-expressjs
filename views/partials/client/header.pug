@@ -16,7 +16,7 @@ header
             | Contact
           a.left-topbar-item(href='#')
             | Sign up
-          a.left-topbar-item(href='#')
+          a.left-topbar-item(href='/login')
             | Log in
         .right-topbar
           a(href='#')
@@ -33,7 +33,7 @@ header
     .wrap-header-mobile
       //- Logo moblie
       .logo-mobile
-        a(hsiref='index.html')
+        a(hsiref='/')
           img(src='images/icons/logo-01.png', alt='IMG-LOGO')
       //- Button show menu
       .btn-show-menu-mobile.hamburger.hamburger--squeeze.m-r--8
@@ -56,7 +56,7 @@ header
             | Contact
           a.left-topbar-item(href='#')
             | Sign up
-          a.left-topbar-item(href='#')
+          a.left-topbar-item(href='/login')
             | Log in
         li.right-topbar
           a(href='#')
@@ -71,7 +71,7 @@ header
             span.fab.fa-youtube
       ul.main-menu-m
         li
-          a(href='index.html') Home
+          a(href='/') Home
           span.arrow-main-menu-m
             //- i.fa.fa-angle-right(aria-hidden='true')
         li
@@ -80,7 +80,7 @@ header
     .wrap-logo.container
       //- Logo desktop
       .logo
-        a(href='index.html')
+        a(href='/')
           img(src='images/icons/logo-01.png', alt='LOGO')
       //- Banner
       .banner-header
@@ -91,14 +91,14 @@ header
       .main-nav
         //- Menu desktop
         nav.menu-desktop
-          a.logo-stick(href='index.html')
+          a.logo-stick(href='/')
             img(src='images/icons/logo-01.png', alt='LOGO')
           ul.main-menu
             li.main-menu-active
-              a(href='index.html') Home
+              a(href='/') Home
             li.mega-menu-item
               a(href='category-01.html') News
-              .sub-mega-menu
+              //- .sub-mega-menu
                 .nav.flex-column.nav-pills(role='tablist')
                   a.nav-link.active(data-toggle='pill', href='#news-0', role='tab') All
                   a.nav-link(data-toggle='pill', href='#news-1', role='tab') Entertaiment

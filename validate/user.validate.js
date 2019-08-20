@@ -34,19 +34,18 @@ module.exports.postRegister = async (req, res, next) => {
 
 module.exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  const errors = [];
 
   const user = await User.findOne({ email: email });
-
-  if (!user || !password) {
-    errors.push({ msg: 'Enter email and password' });
-  }
-
-  const isVerified = user.isVerified;
 
   const comparePassword = pwd => {
     return bcrypt.compareSync(pwd, user.password);
   };
+
+  let errors = [];
+
+  if (email == '' || password == '') {
+    errors.push({ msg: 'Enter email and password' });
+  }
 
   if (!user || !comparePassword(password)) {
     errors.push({
@@ -54,10 +53,13 @@ module.exports.postLogin = async (req, res, next) => {
     });
   }
 
-  if (!isVerified) {
-    errors.push({
-      msg: "This account hasn't already been verified"
-    });
+  if (user) {
+    const isVerified = user.isVerified;
+    if (!isVerified) {
+      errors.push({
+        msg: "This account hasn't already been verified"
+      });
+    }
   }
 
   if (errors.length) {

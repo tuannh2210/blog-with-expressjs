@@ -3,7 +3,6 @@ const router = express.Router();
 
 const controller = require('../controllers/category.controller');
 const { ensureAuthenticated } = require('../middlewares/auth.middleware');
-
 const Category = require('../models/category.model');
 
 router.get('/', controller.getAll);

@@ -12,10 +12,11 @@ block content
         .form-group
           label(for='category') Category
           select#category.form-control(name='category')
-            option(value=article.category._id selected)=article.category.name
             each cate in cates
-              option(value=cate._id )=cate.name
-            
+              if cate._id.toJSON() === article.category._id.toJSON()
+                option(value=cate_id selected)=article.category.name
+              else 
+                option(value=cate._id)=cate.name
         .form-group
           label(for='Title') Title
           input#email.form-control(type='text', name='title', placeholder='Enter Title' value=article.title )

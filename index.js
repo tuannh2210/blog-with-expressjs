@@ -20,6 +20,7 @@ mongoose.connect(process.env.MONGO_URL);
 const authRouter = require('./routes/auth.route');
 const articleRouter = require('./routes/article.route');
 const categoryRouter = require('./routes/category.route');
+const indexRouter = require('./routes/index.route');
 
 // pug template
 app.set('view engine', 'pug');
@@ -46,21 +47,16 @@ app.use((req, res, next) => {
 });
 
 // // set up route
-// app.get('/', (req, res) => {
-//   res.send("<a href='login'>login</a>");
-// });
-app.use('/', authRouter);
+
 app.use('/posts', articleRouter);
 app.use('/cates', categoryRouter);
+app.use('/', indexRouter);
+app.use('/', authRouter);
 
 app.use(express.static('public'));
 
-app.use('/', ensureAuthenticated, (req, res) => {
-  res.render('layout/client.pug');
-});
-
 app.use('*', (req, res) => {
-  res.send('không tbaays');
+  res.send('Not found');
 });
 
 const post = 3001;

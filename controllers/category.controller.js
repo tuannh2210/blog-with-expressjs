@@ -61,7 +61,10 @@ module.exports.saveEdit = (req, res) => {
   );
 };
 module.exports.remove = async (req, res) => {
-  Category.remove({ _id: req.params.cateId })
+  const cateId = req.params.cateId;
+  const articles = await Article.find({ category: cateId });
+  articles.forEach(item => item.remove());
+  Category.remove({ _id: cateId })
     .then(() => res.redirect('/cates'))
     .catch(err => res.json(err));
 };
