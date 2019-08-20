@@ -50,8 +50,8 @@ app.use((req, res, next) => {
 
 app.use('/posts', articleRouter);
 app.use('/cates', categoryRouter);
-app.use('/', indexRouter);
 app.use('/', authRouter);
+app.use('/', indexRouter);
 
 app.use(express.static('public'));
 

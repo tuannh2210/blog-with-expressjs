@@ -40,6 +40,17 @@ router.param('article', function(req, res, next, articleId) {
       req.article = article;
       return next();
     })
-    .catch(err => next(err));
+    .catch(err => res.render('error'));
 });
+
+router.param('slug', function(req, res, next, articleId) {
+  Article.find({ slug: slug })
+    .then(article => {
+      if (!article) res.sendStatus(404);
+      req.article = article;
+      return next();
+    })
+    .catch(err => res.render('error'));
+});
+
 module.exports = router;

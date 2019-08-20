@@ -96,8 +96,9 @@ header
           ul.main-menu
             li.main-menu-active
               a(href='/') Home
-            li.mega-menu-item
-              a(href='category-01.html') News
+            each cate in menu  
+              li.mega-menu-item
+                a(href=`${cate.slug}.html`)= cate.name
               //- .sub-mega-menu
                 .nav.flex-column.nav-pills(role='tablist')
                   a.nav-link.active(data-toggle='pill', href='#news-0', role='tab') All

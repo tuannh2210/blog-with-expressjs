@@ -32,9 +32,9 @@ module.exports.detail = async (req, res) => {
 
   Article.update({ slug: req.params.slug }, { view: conunt }).then(() =>
     res.render('article/detail', {
-      article: article,
-      date: date,
-      conunt: conunt
+      article,
+      date,
+      conunt
     })
   );
 };
@@ -85,7 +85,7 @@ module.exports.edit = async (req, res) => {
     res.redirect('back');
   }
   res.render('article/edit', {
-    article: article,
+    article,
     cates
   });
 };

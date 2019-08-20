@@ -42,6 +42,6 @@ router.param('token', (req, res, next, token) => {
       req.token = token;
       return next();
     })
-    .catch(err => next(err));
+    .catch(() => res.render(error));
 });
 module.exports = router;
