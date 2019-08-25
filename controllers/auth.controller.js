@@ -33,8 +33,7 @@ module.exports.registerPost = async (req, res, next) => {
   const user = new User({
     username,
     email,
-    password: hashPasword(password),
-    isVerified: true
+    password: hashPasword(password)
   });
   user
     .save()
@@ -76,10 +75,10 @@ module.exports.registerPost = async (req, res, next) => {
         });
       });
       // req.flash('success_msg', 'You are now registered and can log in');
-      // req.flash(
-      //   'success_msg',
-      //   'A verification email has been sent to ' + user.email + '.'
-      // );
+      req.flash(
+        'success_msg',
+        'A verification email has been sent to ' + user.email + '.'
+      );
       res.redirect('/login');
     })
     .catch(err => req.flash('error_msg', err.message));
