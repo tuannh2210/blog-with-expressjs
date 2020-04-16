@@ -9,7 +9,10 @@ const TokenSchema = new Schema({
     required: true,
     ref: 'User'
   },
-  token: { type: String, required: true },
+  token: { 
+    type: String, 
+    required: true 
+  },
   createdAt: {
     type: Date,
     required: true,

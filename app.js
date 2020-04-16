@@ -47,9 +47,8 @@ app.use((req, res, next) => {
 });
 
 // // set up route
-
-app.use('/posts', articleRouter);
-app.use('/cates', categoryRouter);
+app.use('/posts', ensureAuthenticated, articleRouter);
+app.use('/categorys', ensureAuthenticated, categoryRouter);
 app.use('/', authRouter);
 app.use('/', indexRouter);
 
@@ -58,7 +57,3 @@ app.use(express.static('public'));
 app.use('*', (req, res) => {
   res.send('Not found');
 });
-
-const post = 3001;
-
-app.listen(post, () => console.log(`listenning on port ${post}`));

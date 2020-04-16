@@ -33,7 +33,7 @@ router.post(
 router.get('/remove/:article', ensureAuthenticated, controller.remove);
 
 // get theo tên param
-router.param('article', function(req, res, next, articleId) {
+router.param('article', function (req, res, next, articleId) {
   Article.findById(articleId)
     .then(article => {
       if (!article) res.sendStatus(404);
@@ -43,7 +43,7 @@ router.param('article', function(req, res, next, articleId) {
     .catch(err => res.render('error'));
 });
 
-router.param('slug', function(req, res, next, articleId) {
+router.param('slug', function (req, res, next, slug) {
   Article.find({ slug: slug })
     .then(article => {
       if (!article) res.sendStatus(404);
