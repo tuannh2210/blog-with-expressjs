@@ -1,8 +1,39 @@
 const User = require('../models/user.model');
 const Token = require('../models/token.model');
-const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
+
+const sendMail = ({mailTo, subject, html}) => {
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USERNAME,
+      pass: process.env.GMAIL_PASSWORD
+    }
+  });
+
+  var mailOptions = {
+    from: '"Blog App" <doremonconan8@gmail.com>',
+    to: mailTo,
+    subject: subject,
+    html: html
+  };
+
+  transporter.sendMail(mailOptions)
+    .then(() => console.log('Send mail'))
+    .catch((error) => console.log('Error:', error.message))
+}
+
+const createToken = (userId) => {
+  const token = new Token({
+    _userId: userId,
+    token: crypto.randomBytes(64).toString('hex'),
+  });
+  token.save().catch(err => res.json({ msgError: err.message }))
+
+  return token
+} 
 
 module.exports.login = (req, res) => {
   res.render('auth/login', {
@@ -22,168 +53,103 @@ module.exports.register = (req, res) => {
   res.render('auth/register');
 };
 
-const hashPasword = password => {
-  const salt = bcrypt.genSaltSync(16).toString('hex');
-  const hash = bcrypt.hashSync(password, salt);
-  return hash;
-};
-
 module.exports.registerPost = async (req, res, next) => {
   const { email, username, password } = req.body;
-  const user = new User({
-    username,
-    email,
-    password: hashPasword(password)
-  });
-  user
-    .save()
-    .then(() => {
-      var token = new Token({
-        _userId: user._id,
-        token: bcrypt.genSaltSync(16).toString('hex')
-      });
+  const user = new User({username, email, password});
 
-      token.save(function(err) {
-        if (err) return err.message;
+  user.save();
+  var token = await createToken(user._id)
 
-        // Send the email
-        var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.GMAIL_USERNAME,
-            pass: process.env.GMAIL_PASSWORD
-          }
-        });
-        var mailOptions = {
-          from: '"Verify account" <doremonconan8@gmail.com>',
-          to: user.email,
-          subject: 'Account Verification Token',
-          text:
-            'Hello,\n\n' +
-            'Please verify your account by clicking the link: \nhttp://' +
-            req.headers.host +
-            '/confirmation/' +
-            token.token +
-            '.\n'
-        };
+  var subject = 'Account Verification Token'
+  var html = `Hello,
+            Please verify your account by clicking the link: 
+            http://${req.headers.host}/confirmation/${token.token}`
 
-        transporter.sendMail(mailOptions, err => {
-          if (err) return res.status(500).send({ msg: err.message });
-          res
-            .status(200)
-            .send('A verification email has been sent to ' + user.email + '.');
-        });
-      });
-      // req.flash('success_msg', 'You are now registered and can log in');
-      req.flash(
-        'success_msg',
-        'A verification email has been sent to ' + user.email + '.'
-      );
-      res.redirect('/login');
-    })
-    .catch(err => req.flash('error_msg', err.message));
+  sendMail({mailTo: email, subject, html })
+
+  req.flash('success_msg', `A verification email has been sent to ${user.email}.`);
+  res.redirect('/login');
 };
 
-module.exports.confirmationPost = (req, res, next) => {
-  Token.findOne({ token: req.params.token }).then(token => {
-    if (!token) {
-      return res.status(400).send({
-        type: 'not-verified',
-        msg: 'We were unable to find a valid token. Your token my have expired.'
-      });
-    }
-    // If we found a token, find a matching user
-    User.findOne({ _id: token._userId }).then(user => {
-      if (!user)
-        return res
-          .status(400)
-          .send({ msg: 'We were unable to find a user for this token.' });
-      if (user.isVerified) {
-        req.flash('success_msg', 'This user has already been verified.');
-        res.redirect('/login');
-      }
-      // Verify and save the user
-      user.isVerified = true;
-      user.save(function(err) {
-        if (err) {
-          return res.status(500).send({ msg: err.message });
-        }
-        res.status(200).send('The account has been verified. Please log in.');
-      });
-    });
-  });
+module.exports.confirmationPost = async (req, res, next) => {
+  let paramToken = req.params.token;
+  let token = await Token.findOne({ token: paramToken});
+  let user = await User.findOne({ _id: token._userId });
+  user.isVerified = true;
+
+  if (user && user.isVerified) {
+    user.save();
+    req.flash('success_msg', 'The account has been verified. Please log in.');
+    res.redirect('/login');
+  }
 };
 
 module.exports.resendToken = (req, res, next) => {
-  res.render('auth/resendToken');
+  res.render('auth/resend-token');
 };
 
-module.exports.resendTokenPost = (req, res, next) => {
-  User.findOne({ email: req.body.email }, function(err, user) {
-    if (!user)
-      return res
-        .status(400)
-        .send({ msg: 'We were unable to find a user with that email.' });
-    if (user.isVerified)
-      return res.status(400).send({
-        msg: 'This account has already been verified. Please log in.'
-      });
+module.exports.resendTokenPost = async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email })
+  if (!user) res.json({msg:'We were unable to find a user with that email.'});
+  if (user.isVerified)
+    res.json({msg: 'This account has already been verified. Please log in.'});
 
-    // Create a verification token, save it, and send email
-    var token = new Token({
-      _userId: user._id,
-      token: bcrypt.genSaltSync(16).toString('hex')
-    });
+  let token =  await createToken(user._id)
+  let subject = 'Account Verification Token';
+  let html = `Hello,
+          Please verify your account by clicking the link: 
+          <strong>URL:</strong> <a href='http://${req.headers.host}/confirmation/${token.token}'> Click vào đây </a>`
+          
+  sendMail({ mailTo: email, subject, html })
 
-    // Save the token
-    token.save(function(err) {
-      if (err) {
-        return res.status(500).send({ msg: err.message });
-      }
+  req.flash('success_msg', `A verification email has been sent to ${user.email}.`);
+  res.redirect('/login');
+};
 
-      // Send the email
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.GMAIL_USERNAME,
-          pass: process.env.GMAIL_PASSWORD
-        }
-      });
-      var mailOptions = {
-        from: process.env.GMAIL_USERNAME,
-        to: user.email,
-        subject: 'Account Verification Token',
-        text:
-          'Hello,\n\n' +
-          'Please verify your account by clicking the link: \nhttp://' +
-          req.headers.host +
-          '/confirmation/' +
-          token.token +
-          '.\n'
-      };
+module.exports.forgotPassword = (req, res) => {
+  res.render('auth/forgot-password')
+}
 
-      transporter.sendMail(mailOptions, function(err) {
-        if (err) {
-          return res.status(500).send({ msg: err.message });
-        }
-        req.flash(
-          'success_msg',
-          'A verification email has been sent to ' + user.email + '.'
-        );
-        res.redirect('/login');
-      });
-    });
-  });
+module.exports.forgotPasswordPost = async (req, res) => {
+  const email = req.body.email;
+  const user = await User.findOne({email: email});
+
+  let token = await createToken(user._id);
+  let subject = 'Quên mật khẩu'
+  let html = `Xin chào ${user.username},<br>
+      Để thay đổi mật khẩu tài khoản của bạn, bạn vui lòng nhấn vào đường link dưới đây:<br>
+    <strong>URL:</strong> <a href='http://${req.headers.host}/reset-password/${token.token}'> Click vào đây </a>`
+  
+  sendMail({ mailTo: email, subject, html })
+
+  req.flash('success_msg', `A verification email has been sent to ${user.email}.`);
+  res.redirect('/reset-password');
+}
+
+module.exports.resetPassword = (req, res) => {
+  res.render('auth/reset-password', {token: req.params.token});
+}
+
+module.exports.resetPasswordPost = async (req, res) => {
+  let paramToken = req.params.token;
+  let { password } = req.body;
+
+  let token = await Token.findOne({ token: paramToken });
+  let user = await User.findOne({ _id: token._userId });
+
+   //Set the new password
+  user.password = password;
+  user.save()
+  req.flash('success_msg', 'Your password has been updated.');
+  res.redirect('/login')
 };
 
 module.exports.logout = (req, res, next) => {
   req.logout();
-  req.flash('success_msg', 'You are logged out');
   req.session.destroy(err => {
-    if (err) {
-      return res.redirect('/dashboard');
-    }
+    if (err) res.redirect('/dashboard');
     res.clearCookie('sessionId');
+    req.flash('success_msg', 'You are logged out');
     res.redirect('/login');
   });
 };

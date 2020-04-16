@@ -21,7 +21,18 @@ router.get('/register', controller.register);
 
 router.post('/register', validate.postRegister, controller.registerPost);
 
+// confirmation
 router.get('/confirmation/:token', controller.confirmationPost);
+
+// forgot password
+router.get('/forgot-password', controller.forgotPassword);
+
+router.post('/forgot-password', controller.forgotPasswordPost);
+
+// reset password
+router.get('/reset-password/:token', controller.resetPassword);
+
+router.post('/reset-password/:token', controller.resetPasswordPost);
 
 router.get('/resend-token', controller.resendToken);
 
@@ -32,12 +43,10 @@ router.get('/logout', controller.logout);
 router.param('token', (req, res, next, token) => {
   Token.findOne({ token: token })
     .then(token => {
-      if (!token)
-        return res.status(400).send({
-          type: 'not-verified',
-          msg:
-            'We were unable to find a valid token. Your token my have expired.'
-        });
+      if (!token) {
+        req.flash('error_msg', 'We were unable to find a valid token. Your token my have expired.');
+        res.redirect('/resend-token')
+      }
 
       req.token = token;
       return next();

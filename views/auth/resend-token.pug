@@ -10,7 +10,7 @@ block content
         |   Resend Token
       include ../partials/messages
       p= message
-      form(action='/resend-token', method='POST')
+      form(method='POST')
         .form-group
           label(for='email') Enter email to resend the password
           input#email.form-control(type='text', name='email', placeholder='Enter Email' value=values ? values.email : '')

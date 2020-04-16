@@ -5,18 +5,41 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
-    username: { type: String, required: true },
-    email: { type: String, unique: true },
-    isVerified: { type: Boolean, default: false },
+    username: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      unique: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
     bio: String,
     image: String,
-    password: { type: String, required: true },
     role: Number
-  },
-  {
-    timestamps: true
+  }, { timestamps: true });
+
+UserSchema.pre('save', function (next) {
+  const user = this;
+
+  if (!user.isModified('password')) return next();
+
+  try {
+    let salt = bcrypt.genSaltSync(16).toString('hex')
+    let hash = bcrypt.hashSync(user.password, salt);
+    this.password = hash;
+    next();
+  } catch {
+    return next(err);
   }
-);
+});
 
 UserSchema.methods.setPassword = password => {
   const salt = bcrypt.genSaltSync(16).toString('hex');
