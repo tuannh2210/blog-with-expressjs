@@ -14,12 +14,12 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 //login page
 router.get('/login', controller.login);
 
-router.post('/login', validate.postLogin, controller.loginPost);
+router.post('/login', validate.postLogin, controller.postLogin);
 
 //register page
 router.get('/register', controller.register);
 
-router.post('/register', validate.postRegister, controller.registerPost);
+router.post('/register', validate.postRegister, controller.postRegister);
 
 // confirmation
 router.get('/confirmation/:token', controller.confirmationPost);
@@ -27,30 +27,24 @@ router.get('/confirmation/:token', controller.confirmationPost);
 // forgot password
 router.get('/forgot-password', controller.forgotPassword);
 
-router.post('/forgot-password', controller.forgotPasswordPost);
+router.post('/forgot-password', controller.postForgotPassword);
 
 // reset password
 router.get('/reset-password/:token', controller.resetPassword);
 
-router.post('/reset-password/:token', controller.resetPasswordPost);
+router.post(
+  '/reset-password/:token',
+  validate.resetPassword,
+  controller.postResetPassword
+);
 
+// resend token
 router.get('/resend-token', controller.resendToken);
 
-router.post('/resend-token', controller.resendTokenPost);
+router.post('/resend-token', controller.PostresendToken);
 
 router.get('/logout', controller.logout);
 
-router.param('token', (req, res, next, token) => {
-  Token.findOne({ token: token })
-    .then(token => {
-      if (!token) {
-        req.flash('error_msg', 'We were unable to find a valid token. Your token my have expired.');
-        res.redirect('/resend-token')
-      }
+router.param('token', controller.checkToken);
 
-      req.token = token;
-      return next();
-    })
-    .catch(() => res.render(error));
-});
 module.exports = router;
