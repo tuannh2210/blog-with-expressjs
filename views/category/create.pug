@@ -7,7 +7,7 @@ block content
       h1.text-center.mb-3 Create category
       include ../partials/messages
       p= message
-      form(action='/cates/create', method='POST')
+      form(method='POST')
         .form-group
           label(for='Title') Name
           input#title.form-control(type='text', name='name', placeholder='Enter name')

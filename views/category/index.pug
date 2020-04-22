@@ -13,19 +13,19 @@ block content
       th Name
       th Description
       th 
-        a(href="cates/create") Create
+        a(href="categories/create") Create
     tr
     - var i = 0
     each cate in cates
       tr
         td= ++i
         td
-          a(href='/cates/' + cate.slug)= cate.name
+          a(href='/categories/' + cate.slug)= cate.name
         td= cate.slug
         td
-          a.btn.btn-info(href= '/cates/edit/' + cate._id)
+          a.btn.btn-info(href= '/categories/edit/' + cate._id)
             i(class="far fa-edit")
-          a.btn.btn-danger(href='/cates/remove/' + cate._id)
+          a.btn.btn-danger(href='/categories/remove/' + cate._id)
               i(class="far fa-trash-alt")
       tr
   include ../partials/pagination
