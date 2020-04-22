@@ -8,6 +8,9 @@ const passport = require('passport');
 const { ensureAuthenticated } = require('./middlewares/auth.middleware');
 const logger = require('./middlewares/logger.middleware');
 const session = require('./middlewares/session.middleware');
+
+const AppError = require('./helpers/appError');
+const globalError = require('./controllers/error.controller')
 // create app
 const app = express();
 // passport config
@@ -48,12 +51,16 @@ app.use((req, res, next) => {
 
 // // set up route
 app.use('/posts', ensureAuthenticated, articleRouter);
-app.use('/categorys', ensureAuthenticated, categoryRouter);
+app.use('/categories', ensureAuthenticated, categoryRouter);
 app.use('/', authRouter);
 app.use('/', indexRouter);
 
-app.use(express.static('public'));
+app.use(express.static(`${__dirname}/public`));
 
-app.use('*', (req, res) => {
-  res.send('Not found');
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this sever !`));
 });
+
+app.use(globalError);
+
+module.exports = app;
