@@ -19,14 +19,4 @@ router.post('/edit/:cateId', ensureAuthenticated, controller.saveEdit);
 
 router.get('/remove/:cateId', ensureAuthenticated, controller.remove);
 
-router.param('cateId', function(req, res, next, cateId) {
-  Category.findById(cateId)
-    .then(cate => {
-      if (!cate) res.sendStatus(404);
-      req.cate = cate;
-      return next();
-    })
-    .catch(err => next(err));
-});
-
 module.exports = router;

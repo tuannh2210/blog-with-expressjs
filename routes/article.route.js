@@ -21,36 +21,15 @@ router.post(
 
 router.get('/:slug', controller.detail);
 
-router.get('/edit/:article', ensureAuthenticated, controller.edit);
+router.get('/edit/:id', ensureAuthenticated, controller.edit);
 
 router.post(
-  '/edit/:article',
+  '/edit/:id',
   upload.single('images'),
   ensureAuthenticated,
   controller.saveEdit
 );
 
-router.get('/remove/:article', ensureAuthenticated, controller.remove);
-
-// get theo tên param
-router.param('article', function (req, res, next, articleId) {
-  Article.findById(articleId)
-    .then(article => {
-      if (!article) res.sendStatus(404);
-      req.article = article;
-      return next();
-    })
-    .catch(err => res.render('error'));
-});
-
-router.param('slug', function (req, res, next, slug) {
-  Article.find({ slug: slug })
-    .then(article => {
-      if (!article) res.sendStatus(404);
-      req.article = article;
-      return next();
-    })
-    .catch(err => res.render('error'));
-});
+router.get('/remove/:id', ensureAuthenticated, controller.remove);
 
 module.exports = router;

@@ -15,7 +15,7 @@ module.exports.getAll = async (req, res) => {
     cates: cates.slice(start, end),
     page,
     totalPage,
-    search
+    search,
   });
 };
 
@@ -24,7 +24,7 @@ module.exports.detail = async (req, res) => {
   const cate = await Category.findOne({ slug: slug });
   const articles = await Article.find({ category: cate._id }).populate([
     'author',
-    'category'
+    'category',
   ]);
   res.render('category/article', { articles: articles });
 };
@@ -33,20 +33,14 @@ module.exports.create = (req, res) => {
   res.render('category/create');
 };
 
-module.exports.saveCreate = (req, res) => {
+module.exports.saveCreate = async (req, res) => {
   const { name, description } = req.body;
-  const category = new Category({
-    name,
-    description
-  });
-
-  category.save().then(() => {
-    res.redirect('/cates');
-  });
+  Category.create({ name, description });
+  res.redirect('/categories');
 };
 
 module.exports.edit = (req, res) => {
-  res.render('category/edit', { cate: req.cate });
+  res.render('category/edit', { cate: req.params.cateId });
 };
 
 module.exports.saveEdit = (req, res) => {
@@ -54,17 +48,20 @@ module.exports.saveEdit = (req, res) => {
   const data = {
     name,
     description,
-    slug: slug(name)
+    slug: slug(name),
   };
   Category.findByIdAndUpdate(req.params.cateId, data).then(() =>
-    res.redirect('/cates')
+    res.redirect('/categories')
   );
 };
 module.exports.remove = async (req, res) => {
   const cateId = req.params.cateId;
   const articles = await Article.find({ category: cateId });
-  articles.forEach(item => item.remove());
-  Category.remove({ _id: cateId })
-    .then(() => res.redirect('/cates'))
-    .catch(err => res.json(err));
+  articles.forEach((item) => item.remove());
+  try {
+    Category.remove({ _id: cateId });
+    res.redirect('/categories');
+  } catch (err) {
+    res.json(err);
+  }
 };
