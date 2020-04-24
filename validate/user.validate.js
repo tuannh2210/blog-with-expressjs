@@ -48,17 +48,13 @@ module.exports.postLogin = async (req, res, next) => {
   }
 
   if (!user || !comparePassword(password)) {
-    errors.push({
-      msg: 'Invalid email or password'
-    });
+    errors.push({msg: 'Invalid email or password'});
   }
 
   if (user) {
     const isVerified = user.isVerified;
     if (!isVerified) {
-      errors.push({
-        msg: "This account hasn't already been verified"
-      });
+      errors.push({msg: "This account hasn't already been verified"});
     }
   }
 
@@ -74,3 +70,20 @@ module.exports.postLogin = async (req, res, next) => {
 
   next();
 };
+
+module.exports.resetPassword = (req, res, next) => {
+  const { password, confirmPassword } = req.body;
+  let errors = [];
+
+  if (password !== confirmPassword) {
+    errors.push({ msg: 'Password do not match' });
+  }
+  if (password.length < 6) {
+    errors.push({ msg: 'Password must be at least 6 characters' });
+  }
+  if (errors.length > 0) {
+    res.render('reset-password',  errors );
+    return;
+  }
+  next();
+}

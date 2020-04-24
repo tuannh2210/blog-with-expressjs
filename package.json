@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --inspect app.js"
+    "dev": "nodemon --inspect server.js"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +30,7 @@
     "pug": "^2.0.3",
     "session-file-store": "^1.2.0",
     "slug": "^1.1.0",
-    "validator": "^10.11.0"
+    "validator": "^13.0.0"
   },
   "devDependencies": {
     "@editorjs/editorjs": "^2.15.0",

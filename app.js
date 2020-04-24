@@ -10,7 +10,9 @@ const logger = require('./middlewares/logger.middleware');
 const session = require('./middlewares/session.middleware');
 
 const AppError = require('./helpers/appError');
-const globalError = require('./controllers/error.controller')
+const globalErrorHander = require('./controllers/error.controller')
+const truncateText = require('./helpers/truncateText')
+
 // create app
 const app = express();
 // passport config
@@ -49,6 +51,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.locals.truncateText = truncateText
+
 // // set up route
 app.use('/posts', ensureAuthenticated, articleRouter);
 app.use('/categories', ensureAuthenticated, categoryRouter);
@@ -61,6 +65,6 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this sever !`));
 });
 
-app.use(globalError);
+app.use(globalErrorHander);
 
 module.exports = app;
