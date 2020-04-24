@@ -9,4 +9,6 @@ router.get('/:slug*.html', controller.category);
 
 router.get('/:slugPost', controller.postDetail);
 
+router.get(`/tag/:tag`, controller.tag)
+
 module.exports = router;

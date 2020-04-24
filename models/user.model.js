@@ -47,7 +47,7 @@ UserSchema.methods.setPassword = password => {
 };
 
 UserSchema.methods.comparePassword = function(pwd) {
-  return bcrypt.compareSync(pwd, this.password);
+  return bcrypt.compareSync(pwd, this.password);  
 };
 
 const User = mongoose.model('User', UserSchema, 'users');

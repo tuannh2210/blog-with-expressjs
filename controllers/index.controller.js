@@ -76,3 +76,11 @@ module.exports.category = async (req, res) => {
     });
   } else res.render('error');
 };
+
+module.exports.tag = async (req, res) => {
+  const tag = req.params.tag;
+  const article = await Article.find({tagList: tag})
+
+  res.json(article)
+
+}

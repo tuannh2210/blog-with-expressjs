@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "ionic": "^5.0.7",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "ckeditor": "^4.14.0"
   }
 }
