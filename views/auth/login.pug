@@ -17,7 +17,12 @@ block content
         .form-group
           label(for='password') Password
           input#password.form-control(type='password', name='password', placeholder='Enter Password')
-        button.btn.btn-primary.btn-block(type='submit') Login
+        .form-inline
+          div(style='width:60%')
+            button.btn.btn-primary(type='submit') Login
+          p.lead.mt-4
+            a(href='/forgot-pasword') Forgot password
       p.lead.mt-4
         | No Account? 
         a(href='/register') Register
+      

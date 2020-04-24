@@ -20,10 +20,14 @@ block content
           label(for='images') Images
           input#images.form-control(type='file', name='images', placeholder='Enter Title')
         .form-group
-          label(for='password') Description
-          textarea#password.form-control(type='text', name='description', placeholder='Enter description')
+          label(for='description') Description
+          textarea#description.form-control(type='text', name='description', placeholder='Enter description')
         .form-group
-          label(for='password') Body
-          textarea#password.form-control(type='text', name='body', placeholder='Enter body')
+          label(for='body') Body
+          textarea#body.form-control(type='text', name='body', placeholder='Enter body')
+        .form-group
+          label(for='tag') Tag
+          input#tag.form-control(type='text', name='tag', placeholder='Enter Tag')
+
         button.btn.btn-primary.btn-block.col-md-3.m-auto(type='submit') Save
     

@@ -5,17 +5,19 @@ block content
   h1.text-center.m-3  All list article
   table.table.col-10(border=1)
     col(width = '50')
-    col(width = '' )
-    col(width = '300')
     col(width = '200')
+    col(width = '200')
+    col(width = '200')
+    col(width = '300')
     col(width = '500')
-    col(width = '')
+    col(width = '200')
     tr
       th #
       th Author
       th Title
       th Images
       th Description
+      th Body
       th 
         a(href="/posts/create") Create
     tr
@@ -27,9 +29,10 @@ block content
         td
           a(href= '/posts/' + article.slug)=  article.title
         td
-          a(href=`${article.images}`)
-            img(src=article.images, alt=article.title, width='100px')
+          a(href=`${host}/${article.images}`)
+            img(src=`${host}/${article.images}`, alt=article.title, width='100px')
         td= article.description.split(' ').splice(0,30).join(' ')
+        td!= truncateText(article.body, 100)
         td
           a.btn.btn-info(href= '/posts/edit/' + article._id)
             i(class="far fa-edit")

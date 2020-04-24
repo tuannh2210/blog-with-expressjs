@@ -16,7 +16,7 @@
 section.bg0.p-b-140.p-t-10
   .container
     .row.justify-content-center
-      .col-md-10.col-lg-8.p-b-30
+      .col-md-10.col-lg-8.p-b-30.post-body
         .p-r-10.p-r-0-sr991
           //-Blog Detail
           .p-b-70
@@ -40,16 +40,16 @@ section.bg0.p-b-140.p-t-10
             p.f1-s-11.cl6.p-b-25
               =article.description
             p.f1-s-11.cl6.p-b-25
-              =article.body
+              !=article.body
             //-Tag
             .flex-s-s.p-t-12.p-b-15
               span.f1-s-12.cl5.m-r-8
                 | Tags:
               .flex-wr-s-s.size-w-0
-                a.f1-s-12.cl8.hov-link1.m-r-15(href='#')
-                  | Streetstyle
-                a.f1-s-12.cl8.hov-link1.m-r-15(href='#')
-                  | Crafts
+                each tag in article.tagList
+                  a.f1-s-12.cl8.hov-link1.m-r-15(href=`tag/${tag}`)
+                    = tag
+                  
             //-Share
             .flex-s-s
               span.f1-s-12.cl5.p-t-1.m-r-15

@@ -25,10 +25,14 @@ block content
           input#images.form-control(type='file', name='images', placeholder='Enter Title')
           input(type='hidden' name='image_old' value=article.images)
         .form-group
-          label(for='password') Description
-          input#password.form-control(type='text', name='description', value= article.description)
+          label(for='description') Description
+          input#description.form-control(type='text', name='description', value= article.description)
         .form-group
-          label(for='password') Body
-          textarea#password.form-control(type='text', name='body', placeholder='Enter body')= article.body
+          label(for='body') Body
+          textarea#body.form-control(type='text', name='body', placeholder='Enter body')= article.body
+        .form-group
+          label(for='tag') Tag
+          input#tag.form-control(type='text', name='tag', placeholder='Enter Tag')
+
         button.btn.btn-primary.btn-block.col-md-3.m-auto(type='submit') Save
     
