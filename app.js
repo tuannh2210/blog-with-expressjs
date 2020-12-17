@@ -9,15 +9,17 @@ const { ensureAuthenticated } = require('./middlewares/auth.middleware');
 const logger = require('./middlewares/logger.middleware');
 const session = require('./middlewares/session.middleware');
 
+const { menu } = require('./middlewares/local.middleware');
+
 const AppError = require('./helpers/appError');
-const globalErrorHander = require('./controllers/error.controller')
-const truncateText = require('./helpers/truncateText')
+const globalErrorHander = require('./controllers/error.controller');
+const truncateText = require('./helpers/truncateText');
 
 // create app
 const app = express();
 // passport config
 require('./config/passport')(passport);
-
+app.use(menu);
 app.use(logger);
 //connet mongoose
 mongoose.connect(process.env.MONGO_URL);
@@ -51,7 +53,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.locals.truncateText = truncateText
+app.locals.truncateText = truncateText;
 
 // // set up route
 app.use('/posts', ensureAuthenticated, articleRouter);
