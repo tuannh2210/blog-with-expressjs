@@ -1,0 +1,16 @@
+extends ../layout/common
+block title 
+  |Rigister account
+block content
+  .row.mt-5
+  .col-lg-5.col-md-8.m-auto
+    .card.card-body
+      h1.text-center.mb-3
+        i.fas.fa-sign-in-alt
+        |   Register
+      include ../partials/messages
+      form(method="POST")
+        .form-group
+          label(for='email') Email
+          input#email.form-control(type='text', name='email', placeholder='Enter Email' value=values? values.email: '')
+        button.btn.btn-primary.btn-block(type='submit') Send mail

@@ -2,7 +2,8 @@ const User = require('../models/user.model');
 const Token = require('../models/token.model');
 const crypto = require('crypto');
 const passport = require('passport');
-const sendMail = require('../helpers/sendMail');
+const Email = require('../helpers/sendMail');
+const AppError = require('../helpers/appError');
 
 const createToken = (userId) => {
   const token = new Token({
@@ -60,14 +61,10 @@ module.exports.postRegister = async (req, res, next) => {
   user.save();
   let token = await createToken(user._id);
 
-  let subject = 'Account Verification Token';
-  let html = `Hello,
-            Please verify your account by clicking the link: 
-            http://${req.headers.host}/confirmation/${token.token}`;
-
   let success_msg = `A verification email has been sent to ${user.email}.`;
 
-  sendMail({ mailTo: email, subject, html });
+  const url = `${req.headers.host}/confirmation/${token.token}`;
+  new Email(user, url).sendVerifyMail();
 
   req.flash('success_msg', success_msg);
   res.redirect('/login');
@@ -91,49 +88,46 @@ module.exports.resendToken = (req, res, next) => {
 };
 
 module.exports.PostresendToken = async (req, res, next) => {
-  const user = await User.findOne({ email: req.body.email });
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user.isVerified) {
+      req.flash('success_msg', `Your account has verified. Log in now `);
+      res.redirect('/login');
+    }
+    const token = await createToken(user._id);
+    const url = `http://${req.headers.host}/confirmation/${token.token}`;
+    new Email(user, url).sendVerifyMail();
 
-  if (!user) {
-    res.json({ msg: 'We were unable to find a user with that email.' });
+    req.flash(
+      'success_msg',
+      `A verification email has been sent to ${user.email}.`
+    );
+    res.redirect('/login');
+  } catch {
+    req.flash('error_msg', `There is no user with email address`);
+    res.redirect('/forgot-password');
   }
-
-  if (user.isVerified) {
-    res.json({ msg: 'This account has already been verified. Please log in.' });
-  }
-
-  let token = await createToken(user._id);
-  let subject = 'Account Verification Token';
-  let html = `Hello,
-          Please verify your account by clicking the link: 
-          <strong>URL:</strong> <a href='http://${req.headers.host}/confirmation/${token.token}'> Click vào đây </a>`;
-
-  sendMail({ mailTo: email, subject, html });
-
-  req.flash(
-    'success_msg',
-    `A verification email has been sent to ${user.email}.`
-  );
-  res.redirect('/login');
 };
 
 module.exports.forgotPassword = (req, res) => {
   res.render('auth/forgot-password');
 };
 
-module.exports.postForgotPassword = async (req, res) => {
-  const email = req.body.email;
-  const user = await User.findOne({ email: email });
+module.exports.postForgotPassword = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email });
+    const token = await createToken(user._id);
+    const ReseSURL = `http://${req.headers.host}/reset-password/${token.token}`;
 
-  let token = await createToken(user._id);
-  let subject = 'Quên mật khẩu';
-  let html = `Xin chào ${user.username},<br>
-      Để thay đổi mật khẩu tài khoản của bạn, bạn vui lòng nhấn vào đường link dưới đây:<br>
-    <strong>URL:</strong> <a href='http://${req.headers.host}/reset-password/${token.token}'> Click vào đây </a>`;
+    new Email(user, ReseSURL).sendPasswordReset();
 
-  sendMail({ mailTo: email, subject, html });
-
-  req.flash('success_msg', `Email có kèm hướng dãn đã được gửi kèm cho bạn`);
-  res.redirect('/login');
+    req.flash('success_msg', `Email có kèm hướng dãn đã được gửi kèm cho bạn`);
+    res.redirect('/login');
+  } catch {
+    req.flash('error_msg', `There is no user with email address`);
+    res.redirect('/forgot-password');
+  }
 };
 
 module.exports.resetPassword = (req, res) => {

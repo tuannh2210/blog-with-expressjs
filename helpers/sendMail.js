@@ -1,24 +1,61 @@
 const nodemailer = require('nodemailer');
+const pug = require('pug');
 
-const sendMail = ({ mailTo, subject, html }) => {
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USERNAME,
-      pass: process.env.GMAIL_PASSWORD
-    }
-  });
+// new Email(user, url).sendWellCome
+class Email {
+  constructor(user, url) {
+    this.to = user.email;
+    this.firstname = user.username.split('')[0];
+    this.url = url;
+    this.from = `Blog App <${process.env.EMAIL_USERNAME}>`;
+  }
 
-  var mailOptions = {
-    from: '"Blog App" <doremonconan8@gmail.com>',
-    to: mailTo,
-    subject: subject,
-    html: html
-  };
+  newTransport() {
+    return nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+  }
 
-  transporter.sendMail(mailOptions)
-    .then(() => console.log('Send mail'))
-    .catch((error) => console.log('Error:', error.message))
+  async send(template, subject) {
+    const html = pug.renderFile(
+      `${__dirname}/../views/emails/${template}.pug`,
+      {
+        firstname: this.firstname,
+        url: this.url,
+        subject,
+      }
+    );
+
+    const mailOptions = {
+      to: this.to,
+      from: this.from,
+      subject,
+      html,
+    };
+
+    await this.newTransport().sendMail(mailOptions);
+  }
+
+  async sendWellCome() {
+    this.send('wellcome', 'Wellcome to us');
+  }
+
+  async sendVerifyMail() {
+    this.send('verify-email', 'Account Verification Email');
+  }
+
+  async sendPasswordReset() {
+    this.send(
+      'password-reset',
+      'Your password reset token ( valid for only 10 minutes'
+    );
+  }
 }
 
-module.exports = sendMail
+module.exports = Email;
