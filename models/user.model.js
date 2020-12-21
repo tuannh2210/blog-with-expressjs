@@ -11,6 +11,7 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
+      required: true,
       unique: true
     },
     password: {
@@ -23,7 +24,9 @@ const UserSchema = new Schema(
     },
     bio: String,
     image: String,
-    role: Number
+    role: Number,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
   }, { timestamps: true });
 
 UserSchema.pre('save', function (next) {

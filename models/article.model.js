@@ -9,52 +9,52 @@ const ArticleSchema = new Schema(
     title: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
-    slug: {
-      type: String,
-      lowercase: true
-    },
+    slug: String,
     images: String,
     description: String,
     body: String,
+    view: Number,
+    tagList: [{ type: String }],
+    favoritesCount: { type: Number, default: 0 },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category'
+      ref: 'Category',
     },
-    tagList: [
-      {
-        type: String
-      }
-    ],
-    view: Number,
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
+      ref: 'User',
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
 ArticleSchema.plugin(uniqueValidator, {
-  message: 'Trùng rồi em ơi'
+  message: 'Aricle is alrealy taken',
 });
 
-ArticleSchema.methods.slugify = function() {
-  let random = (Math.random() * Math.pow(36, 6)) | 0;
-  this.slug = slug(this.title) + '-' + random;
+ArticleSchema.methods.slugify = function () {
+  let randomSlug = (Math.random() * Math.pow(36, 6)) | 0;
+  this.slug = slug(this.title) + '-' + randomSlug;
 };
 
-ArticleSchema.pre('validate', function(next) {
+ArticleSchema.pre('validate', function (next) {
   this.slugify();
   return next();
 });
 
-ArticleSchema.methods.toJSONFor = function(user) {
+ArticleSchema.methods.toJSONFor = function (user) {
   return {
-    author: this.author.toProfileJSONFor(user)
+    author: this.author.toProfileJSONFor(user),
   };
 };
 const Article = mongoose.model('Article', ArticleSchema);
