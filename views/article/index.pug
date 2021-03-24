@@ -5,6 +5,7 @@ block content
   h1.text-center.m-3  All list article
   table.table.col-10(border=1)
     col(width = '50')
+    col(width = '100')
     col(width = '200')
     col(width = '200')
     col(width = '200')
@@ -13,6 +14,7 @@ block content
     col(width = '200')
     tr
       th #
+      th Category
       th Author
       th Title
       th Images
@@ -25,14 +27,18 @@ block content
     each article in articles
       tr
         td= ++i
+        td= article.category.name
         td= article.author.username
         td
           a(href= '/posts/' + article.slug)=  article.title
         td
           a(href=`${host}/${article.images}`)
             img(src=`${host}/${article.images}`, alt=article.title, width='100px')
-        td= article.description.split(' ').splice(0,30).join(' ')
-        td!= truncateText(article.body, 100)
+        td= article.description.split(' ').splice(0,30).join(' ') + '...'
+        if article.body
+          td= article.body.substring(0, 100) + '...'
+        else
+          td Bài viết chưa có nội dung 
         td
           a.btn.btn-info(href= '/posts/edit/' + article._id)
             i(class="far fa-edit")

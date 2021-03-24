@@ -17,7 +17,7 @@ module.exports.getAll = async (req, res) => {
   var end = page * itemperPage;
 
   var articles = await Article.find({ title: { $regex: '.*' + search + '.*' } })
-    .populate('author')
+    .populate('author').populate('category')
     .sort({ _id: -1 });
   var totalPage = Math.ceil(articles.length / itemperPage);
 
@@ -31,10 +31,9 @@ module.exports.getAll = async (req, res) => {
 };
 
 module.exports.detail = async (req, res) => {
-  res.json({ slug: req.params.slug });
   const article = await Article.findOne({
     slug: req.params.slug,
-  }).populate('author');
+  }).populate('author').populate('category')
 
   const date = moment(article.createdAt).format('DD/MM/YYYY');
   const pageViewCount = article.view;
@@ -76,7 +75,7 @@ module.exports.saveCreate = (req, res) => {
     images,
     category,
     author: req.user,
-    view: 1,
+    view:Math.floor(Math.random() * 999 + 100),
     tagList: tag.split(' ').filter(item => item.length > 0)
   });
   article
@@ -122,10 +121,10 @@ module.exports.saveEdit = (req, res) => {
     author: req.user._id,
     slug: slug(title) + '-' + ((Math.random() * Math.pow(36, 6)) | 0),
   };
-  console.log(req.params.id)
+  
   Article.findByIdAndUpdate(req.params.id, data)
     .then(() => res.redirect('/posts'))
-    .catch((err) => res.json({ dbdrgt: err }));
+    .catch((err) => res.json({ Lỗi: err }));
 };
 
 module.exports.remove = async (req, res) => {

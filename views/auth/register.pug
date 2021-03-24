@@ -8,14 +8,20 @@ block content
       h1.text-center.mb-3
         i.fas.fa-sign-in-alt
         |   Register
-      include ../partials/messages
+      //- include ../partials/messages
       form(method="POST")
         .form-group
           label(for='email') Name
           input#email.form-control(type='text', name='username', placeholder='Enter Username' value=values? values.username : '')
         .form-group
-          label(for='email') Email
+          label(for='email') Email<sup class="text-danger">*</sup>
           input#email.form-control(type='text', name='email', placeholder='Enter Email' value=values? values.email: '')
+          if errors
+            .invalid-feedback
+              span= errors[0].msg
+
+          small#emailHelp.form-text.text-muted 
+            | We'll never share your email with anyone else.
         .form-group
           label(for='password') Password
           input#password.form-control(type='password', name='password', placeholder='Enter Password')

@@ -34,6 +34,9 @@ module.exports.postDetail = async (req, res) => {
   const article = await Article.findOne({ slug: slug }).populate(
     'author category'
   );
+
+  await Article.findOneAndUpdate({slug:slug},{view: article.view + 1})
+
   if (article) {
     res.render('client/post-detail.pug', {
       article,

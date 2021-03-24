@@ -1,0 +1,74 @@
+.col-md-10.col-lg-4.p-b-30
+  .p-l-10.p-rl-0-sr991.p-t-70
+    //-Category
+    .p-b-60
+      .how2.how2-cl4.flex-s-c
+        h3.f1-m-2.cl3.tab01-title
+          | Category
+      ul.p-t-35
+        each cate in menu
+          li.how-bor3.p-rl-4
+            a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href='#')
+              =cate.name
+        
+    //-Popular Posts
+    .p-b-30
+      .how2.how2-cl4.flex-s-c
+        h3.f1-m-2.cl3.tab01-title
+          | Popular Post
+
+      //- ul.p-t-35
+      //-   li.flex-wr-sb-s.p-b-30
+      //-     a.size-w-10.wrap-pic-w.hov1.trans-03(href='#')
+      //-       img(src='images/popular-post-04.jpg', alt='IMG')
+      //-     .size-w-11
+      //-       h6.p-b-4
+      //-         a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-02.html')
+      //-           | Donec metus orci, malesuada et lectus vitae
+      //-       span.cl8.txt-center.p-b-24
+      //-         a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+      //-           | Music
+      //-         span.f1-s-3.m-rl-3
+      //-           | -
+      //-         span.f1-s-3
+      //-           | Feb 18
+      ul.p-t-35
+      each article in popular
+        li.flex-wr-sb-s.p-b-30
+          a.size-w-10.wrap-pic-w.hov1.trans-03(href='#')
+            img(src=article.images, alt=article.title)
+          .size-w-11
+            h6.p-b-4
+              a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-02.html')
+                =article.title
+            span.cl8.txt-center.p-b-24
+              a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+                | Celebrity
+              span.f1-s-3.m-rl-3
+                | -
+              span.f1-s-3=article.author.username
+                | Fed 12
+
+        
+    //-Tag
+    div
+      .how2.how2-cl4.flex-s-c.m-b-30
+        h3.f1-m-2.cl3.tab01-title
+          | Tags
+      .flex-wr-s-s.m-rl--5
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | Fashion
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | Lifestyle
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | Denim
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | Streetstyle
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | Crafts
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | Magazine
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | News
+        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
+          | Blogs

@@ -50,10 +50,12 @@ module.exports.saveEdit = (req, res) => {
     description,
     slug: slug(name),
   };
+
   Category.findByIdAndUpdate(req.params.cateId, data).then(() =>
     res.redirect('/categories')
   );
 };
+
 module.exports.remove = async (req, res) => {
   const cateId = req.params.cateId;
   const articles = await Article.find({ category: cateId });

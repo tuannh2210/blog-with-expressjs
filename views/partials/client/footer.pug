@@ -61,21 +61,10 @@ footer
             h5.f1-m-7.cl0
               | Category
           ul.m-t--12
-            li.how-bor1.p-rl-5.p-tb-10
-              a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href='#')
-                | Fashion (22)
-            li.how-bor1.p-rl-5.p-tb-10
-              a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href='#')
-                | Technology (29)
-            li.how-bor1.p-rl-5.p-tb-10
-              a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href='#')
-                | Street Style (15)
-            li.how-bor1.p-rl-5.p-tb-10
-              a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href='#')
-                | Life Style (28)
-            li.how-bor1.p-rl-5.p-tb-10
-              a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href='#')
-                | DIY &amp; Crafts (16)
+            each cate in menu
+              li.how-bor1.p-rl-5.p-tb-10
+                a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href='#')
+                  =cate.name
 //-Back to top
 #myBtn.btn-back-to-top
   span.symbol-btn-back-to-top

@@ -14,7 +14,7 @@ block content
           select#category.form-control(name='category')
             each cate in cates
               if cate._id.toJSON() === article.category._id.toJSON()
-                option(value=cate_id selected)=article.category.name
+                option(value=cate._id selected)=article.category.name
               else 
                 option(value=cate._id)=cate.name
         .form-group
