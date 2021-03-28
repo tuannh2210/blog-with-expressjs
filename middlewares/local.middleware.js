@@ -8,7 +8,10 @@ module.exports.menu = async (req, res, next) => {
 };
 
 module.exports.popular = async (req, res, next) => {
-  const popular = await Article.find().sort({ view: -1 }).populate('author').limit(5);
+  const popular = await Article.find()
+    .sort({ view: -1 })
+    .populate(['author','category'])
+    .limit(4);
   res.locals.popular = popular;
   next();
 };

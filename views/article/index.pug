@@ -27,10 +27,11 @@ block content
     each article in articles
       tr
         td= ++i
-        td= article.category.name
+        td
+          a(href=`categories/${article.category.slug}`)= article.category.name 
         td= article.author.username
         td
-          a(href= '/posts/' + article.slug)=  article.title
+          a(href= article.slug)=  article.title
         td
           a(href=`${host}/${article.images}`)
             img(src=`${host}/${article.images}`, alt=article.title, width='100px')

@@ -30,24 +30,6 @@ module.exports.getAll = async (req, res) => {
   });
 };
 
-module.exports.detail = async (req, res) => {
-  const article = await Article.findOne({
-    slug: req.params.slug,
-  }).populate('author').populate('category')
-
-  const date = moment(article.createdAt).format('DD/MM/YYYY');
-  const pageViewCount = article.view;
-  const conunt = parseInt(pageViewCount + 1) || 1;
-
-  Article.update({ slug: req.params.slug }, { view: conunt }).then(() =>
-    res.render('article/detail', {
-      article,
-      date,
-      conunt,
-    })
-  );
-};
-
 module.exports.create = async (req, res) => {
   const cates = await Category.find();
   res.render('article/create', { cates });

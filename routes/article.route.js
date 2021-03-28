@@ -19,8 +19,6 @@ router.post(
   controller.saveCreate
 );
 
-router.get('/:slug', controller.detail);
-
 router.get('/edit/:id', ensureAuthenticated, controller.edit);
 
 router.post(

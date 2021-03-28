@@ -7,11 +7,12 @@
         each trend in trending
           span.dis-inline-block.slide100-txt-item.animated.visible-false
             = trend.title 
-        
-    .pos-relative.size-a-2.bo-1-rad-22.of-hidden.bocl11.m-tb-6
-      input.f1-s-1.cl6.plh9.s-full.p-l-25.p-r-45(type='text', name='search', placeholder='Search')
-      button.flex-c-c.size-a-1.ab-t-r.fs-20.cl2.hov-cl10.trans-03
-        i.zmdi.zmdi-search
+
+    form(action="/")      
+      .pos-relative.size-a-2.bo-1-rad-22.of-hidden.bocl11.m-tb-6
+        input.f1-s-1.cl6.plh9.s-full.p-l-25.p-r-45(type='text', name='search', placeholder='Search')
+        button.flex-c-c.size-a-1.ab-t-r.fs-20.cl2.hov-cl10.trans-03
+          i.zmdi.zmdi-search
 //-Feature post
 section.bg0
   .container
@@ -26,21 +27,3 @@ section.bg0
               h3.how1-child2.m-t-10
                 a.f1-m-1.cl0.hov-cl10.trans-03(href=`${article.slug}`)
                   =  article.title
-                  
-
-//- .container
-//-   .top-new.row.bg-dark
-//-     .item
-//-       a(href="#")
-//-         .thumb(style="background-image: url(https://znews-photo.zadn.vn/w1440/Uploaded/ofh_btgazspf/2019_08_18/24331623_315466182290406_6447837795061858304_n.jpg)")
-//-       .body
-//-         h3 | Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat velit laboriosam vel itaque eaque perspiciatis officiis aliquid, vitae magnam laudantium impedit, temporibus architecto culpa, modi repellat nihil reprehenderit commodi!
-
-//-     .item
-//-       .thumb(style="background-image: url(https://znews-photo.zadn.vn/w1440/Uploaded/ofh_btgazspf/2019_08_18/24331623_315466182290406_6447837795061858304_n.jpg)")
-//-     .item
-//-       .thumb(style="background-image: url(https://znews-photo.zadn.vn/w1440/Uploaded/ofh_btgazspf/2019_08_18/24331623_315466182290406_6447837795061858304_n.jpg)")
-//-     .item
-//-       .thumb(style="background-image: url(https://znews-photo.zadn.vn/w1440/Uploaded/ofh_btgazspf/2019_08_18/24331623_315466182290406_6447837795061858304_n.jpg)")
-//-     .item
-//-       .thumb(style="background-image: url(https://znews-photo.zadn.vn/w1440/Uploaded/ofh_btgazspf/2019_08_18/24331623_315466182290406_6447837795061858304_n.jpg)")

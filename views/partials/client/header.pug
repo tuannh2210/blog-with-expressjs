@@ -6,7 +6,7 @@ header
         .left-topbar
           span.left-topbar-item.flex-wr-s-c
             span
-              | New York, NY
+              |Ha Noi,VN
             img.m-b-1.m-rl-8(src='images/icons/icon-night.png', alt='IMG')
             span
               | HI 58&deg; LO 56&deg;
@@ -45,7 +45,7 @@ header
         li.left-topbar
           span.left-topbar-item.flex-wr-s-c
             span
-              | New York, NY
+              | Hanoi, Vietnam
             img.m-b-1.m-rl-8(src='images/icons/icon-night.png', alt='IMG')
             span
               | HI 58&deg; LO 56&deg;
@@ -99,44 +99,3 @@ header
             each cate in menu  
               li.mega-menu-item
                 a(href=`${cate.slug}.html`)= cate.name
-              //- .sub-mega-menu
-                .nav.flex-column.nav-pills(role='tablist')
-                  a.nav-link.active(data-toggle='pill', href='#news-0', role='tab') All
-                  a.nav-link(data-toggle='pill', href='#news-1', role='tab') Entertaiment
-                .tab-content
-                  #news-0.tab-pane.show.active(role='tabpanel')
-                    .row
-                      .col-3
-                        //- Item post
-                        div
-                          a.wrap-pic-w.hov1.trans-03(href='blog-detail-01.html')
-                            img(src='images/post-05.jpg', alt='IMG')
-                          .p-t-10
-                            h5.p-b-5
-                              a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-01.html')
-                                | Donec metus orci, malesuada et lectus vitae
-                            span.cl8
-                              a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
-                                | Music
-                              span.f1-s-3.m-rl-3
-                                | -
-                              span.f1-s-3
-                                | Feb 18
-                  #news-1.tab-pane(role='tabpanel')
-                    .row
-                      .col-3
-                        //- Item post
-                        div
-                          a.wrap-pic-w.hov1.trans-03(href='blog-detail-01.html')
-                            img(src='images/post-06.jpg', alt='IMG')
-                          .p-t-10
-                            h5.p-b-5
-                              a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-01.html')
-                                | Donec metus orci, malesuada et lectus vitae
-                            span.cl8
-                              a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
-                                | Music
-                              span.f1-s-3.m-rl-3
-                                | -
-                              span.f1-s-3
-                                | Jan 15

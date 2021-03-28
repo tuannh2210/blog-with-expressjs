@@ -24,38 +24,22 @@ footer
                 span.fab.fa-vimeo-v
               a.fs-18.cl11.hov-cl10.trans-03.m-r-8(href='#')
                 span.fab.fa-youtube
-        .col-sm-6.col-lg-4.p-b-20
+        .col-sm-6.col-lg-4.p-b-20.popular-post
           .size-h-3.flex-s-c
             h5.f1-m-7.cl0
               | Popular Posts
           ul
-            li.flex-wr-sb-s.p-b-20
-              a.size-w-4.wrap-pic-w.hov1.trans-03(href='#')
-                img(src='images/popular-post-01.jpg', alt='IMG')
-              .size-w-5
-                h6.p-b-5
-                  a.f1-s-5.cl11.hov-cl10.trans-03(href='#')
-                    | Donec metus orci, malesuada et lectus vitae
-                span.f1-s-3.cl6
-                  | Feb 17
-            li.flex-wr-sb-s.p-b-20
-              a.size-w-4.wrap-pic-w.hov1.trans-03(href='#')
-                img(src='images/popular-post-02.jpg', alt='IMG')
-              .size-w-5
-                h6.p-b-5
-                  a.f1-s-5.cl11.hov-cl10.trans-03(href='#')
-                    | Lorem ipsum dolor sit amet, consectetur
-                span.f1-s-3.cl6
-                  | Feb 16
-            li.flex-wr-sb-s.p-b-20
-              a.size-w-4.wrap-pic-w.hov1.trans-03(href='#')
-                img(src='images/popular-post-03.jpg', alt='IMG')
-              .size-w-5
-                h6.p-b-5
-                  a.f1-s-5.cl11.hov-cl10.trans-03(href='#')
-                    | Suspendisse dictum enim quis imperdiet auctor
-                span.f1-s-3.cl6
-                  | Feb 15
+            each article in popular
+              li.flex-wr-sb-s.p-b-20
+                a.size-w-4.wrap-pic-w.hov1.trans-03(href='#')
+                  img(src=`${article.images}`, alt=`${popular.name}`)
+                .size-w-5
+                  h6.p-b-5
+                    a.f1-s-5.cl11.hov-cl10.trans-03(href='#')
+                     =article.title
+                  span.f1-s-3.cl6
+                    =article.createdAt.toString().split(' ').splice(1,3).join(' ')
+            
         .col-sm-6.col-lg-4.p-b-20
           .size-h-3.flex-s-c
             h5.f1-m-7.cl0
@@ -63,7 +47,7 @@ footer
           ul.m-t--12
             each cate in menu
               li.how-bor1.p-rl-5.p-tb-10
-                a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href='#')
+                a.f1-s-5.cl11.hov-cl10.trans-03.p-tb-8(href=`${cate.slug}.html`)
                   =cate.name
 //-Back to top
 #myBtn.btn-back-to-top

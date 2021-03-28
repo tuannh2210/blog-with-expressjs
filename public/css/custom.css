@@ -1,0 +1,10 @@
+.post-body  img {
+  width: 100%
+}
+.popular-post img{
+  min-height: 70px;
+}
+
+.form-control{
+  height: calc(1.5em + .75rem + 6px);
+}

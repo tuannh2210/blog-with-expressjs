@@ -21,7 +21,7 @@ require('./config/passport')(passport);
 app.use(menu, popular);
 app.use(logger);
 //connet mongoose
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true });
 // routes
 const authRouter = require('./routes/auth.route');
 const articleRouter = require('./routes/article.route');

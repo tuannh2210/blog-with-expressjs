@@ -1,8 +1,10 @@
 .container
   .headline.bg0.flex-wr-sb-c.p-rl-20.p-tb-8
     .f2-s-1.p-r-30.m-tb-6
-      a.breadcrumb-item.f1-s-3.cl9(href='index.html')
+      a.breadcrumb-item.f1-s-3.cl9(href='./')
         | Home
+      a.breadcrumb-item.f1-s-3.cl9(href=`${article.category.slug}.html`)
+        = article.category.name  
       span.breadcrumb-item.f1-s-3.cl9
         = article.title
 
@@ -19,7 +21,6 @@ section.bg0.p-b-140.p-t-10
           //-Blog Detail
           .p-b-70
             a.f1-s-10.cl2.hov-cl10.trans-03.text-uppercase(href='#')
-              = article.category.name
             h3.f1-l-3.cl2.p-b-16.p-t-33.respon2
               = article.title
             .flex-wr-s-s.p-b-40
@@ -28,9 +29,9 @@ section.bg0.p-b-140.p-t-10
                   =article.author.username
                 span.m-rl-3 -
                 span
-                  | Feb 18
+                  //- | Feb 18
               span.f1-s-3.cl8.m-r-15
-                =article.view + ' view'
+                =article.view + ' views'
               a.f1-s-3.cl8.hov-cl10.trans-03.m-r-15(href='#')
                 | 0 Comment 
             .wrap-pic-max-w.p-b-30

@@ -12,26 +12,11 @@
               =cate.name
         
     //-Popular Posts
-    .p-b-30
+    .p-b-30.popular-post
       .how2.how2-cl4.flex-s-c
         h3.f1-m-2.cl3.tab01-title
           | Popular Post
 
-      //- ul.p-t-35
-      //-   li.flex-wr-sb-s.p-b-30
-      //-     a.size-w-10.wrap-pic-w.hov1.trans-03(href='#')
-      //-       img(src='images/popular-post-04.jpg', alt='IMG')
-      //-     .size-w-11
-      //-       h6.p-b-4
-      //-         a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-02.html')
-      //-           | Donec metus orci, malesuada et lectus vitae
-      //-       span.cl8.txt-center.p-b-24
-      //-         a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
-      //-           | Music
-      //-         span.f1-s-3.m-rl-3
-      //-           | -
-      //-         span.f1-s-3
-      //-           | Feb 18
       ul.p-t-35
       each article in popular
         li.flex-wr-sb-s.p-b-30
@@ -43,13 +28,12 @@
                 =article.title
             span.cl8.txt-center.p-b-24
               a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
-                | Celebrity
+                =article.category.name
               span.f1-s-3.m-rl-3
                 | -
-              span.f1-s-3=article.author.username
-                | Fed 12
+              span.f1-s-3
+                 =article.createdAt.toString().split(' ').splice(1,3).join(' ')
 
-        
     //-Tag
     div
       .how2.how2-cl4.flex-s-c.m-b-30
