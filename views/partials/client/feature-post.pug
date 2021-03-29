@@ -19,11 +19,19 @@ section.bg0
     .row.m-rl--1
       each article in newArticle
         .col-sm-6.col-lg-4.p-rl-1.p-b-2
-          .bg-img1.size-a-12.how1.pos-relative(style=`background-image: url(${article.images});`)
-            a.dis-block.how1-child1.trans-03(href=`${article.slug}`)
-            .flex-col-e-s.s-full.p-rl-25.p-tb-11
-              a.dis-block.how1-child2.f1-s-2.cl0.bo-all-1.bocl0.hov-btn1.trans-03.p-rl-5.p-t-2(href=`${article.category.slug}.html`)= article.category.name
+            mixin img
+              if article.images
+                .bg-img1.size-a-12.how1.pos-relative(style=`background-image: url(${article.images})`)
+                  block
+              else 
+                .bg-img1.size-a-12.how1.pos-relative(style=`background-image: url(images/default.png)`)
+                  block
+    
+            +img
+              a.dis-block.how1-child1.trans-03(href=`${article.slug}`)
+              .flex-col-e-s.s-full.p-rl-25.p-tb-11
+                a.dis-block.how1-child2.f1-s-2.cl0.bo-all-1.bocl0.hov-btn1.trans-03.p-rl-5.p-t-2(href=`${article.category.slug}.html`)= article.category.name
 
-              h3.how1-child2.m-t-10
-                a.f1-m-1.cl0.hov-cl10.trans-03(href=`${article.slug}`)
-                  =  article.title
+                h3.how1-child2.m-t-10
+                  a.f1-m-1.cl0.hov-cl10.trans-03(href=`${article.slug}`)
+                    =  article.title
