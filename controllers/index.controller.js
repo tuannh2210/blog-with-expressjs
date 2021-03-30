@@ -3,7 +3,7 @@ const Category = require('../models/category.model');
 const moment = require('moment');
 
 module.exports.index = async (req, res) => {
-  const query = req.query.search ;
+  const query = req.query.search;
 
   const articles = await Article.find()
     .populate(['author', 'category'])
@@ -25,11 +25,17 @@ module.exports.index = async (req, res) => {
       trending,
       moment,
     });
-  }
-  else {
-    res.render('client/search-detail', {
+  } else {
 
-    })
+    const matchArticles = await Article.find({
+      title: new RegExp(query.toLowerCase()),
+    }).populate(['author', 'category']);
+
+    res.render('client/result-article', {
+      articles: matchArticles,
+      title: 'Kết quả tìm kiếm',
+      moment,
+    });
   }
 };
 
@@ -38,16 +44,16 @@ module.exports.postDetail = async (req, res) => {
   const article = await Article.findOne({ slug: slug }).populate(
     'author category'
   );
-  const viewPage = article.view
-  const view = await Article.findOneAndUpdate(
-    { slug: slug },
-    { view: viewPage + 1 }
-  );
+  // const viewPage = article.view
+  // const view = await Article.findOneAndUpdate(
+  //   { slug: slug },
+  //   { view: viewPage + 1 }
+  // );
 
   if (article) {
-    res.render('client/post-detail.pug', {
+    res.render('client/post-detail', {
       article,
-      view,
+      // view,
     });
   } else res.render('error');
 };
@@ -81,7 +87,11 @@ module.exports.category = async (req, res) => {
 
 module.exports.tag = async (req, res) => {
   const tag = req.params.tag;
-  const article = await Article.find({ tagList: tag });
+  const articles = await Article.find({ tags: tag });
 
-  res.json(article);
+  res.render('client/result-article',{
+    articles,
+    title: `Các bài viết về ${tag}`,
+    moment,
+  })
 };

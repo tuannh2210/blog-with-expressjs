@@ -9,7 +9,7 @@ const { ensureAuthenticated } = require('./middlewares/auth.middleware');
 const logger = require('./middlewares/logger.middleware');
 const session = require('./middlewares/session.middleware');
 
-const { menu, popular } = require('./middlewares/local.middleware');
+const { menu, popular, tagList } = require('./middlewares/local.middleware');
 
 const AppError = require('./helpers/appError');
 const globalErrorHander = require('./controllers/error.controller');
@@ -18,10 +18,13 @@ const globalErrorHander = require('./controllers/error.controller');
 const app = express();
 // passport config
 require('./config/passport')(passport);
-app.use(menu, popular);
-app.use(logger);
+app.use(logger, menu, popular, tagList);
+app.use(fullUrl = (req, res, next) => {
+   res.locals.fullUrl = `${req.protocol}://${req.get('host')}`;
+   next()
+})
 //connet mongoose
-mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true });
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 // routes
 const authRouter = require('./routes/auth.route');
 const articleRouter = require('./routes/article.route');

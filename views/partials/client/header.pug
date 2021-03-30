@@ -7,7 +7,7 @@ header
           span.left-topbar-item.flex-wr-s-c
             span
               |Ha Noi,VN
-            img.m-b-1.m-rl-8(src='images/icons/icon-night.png', alt='IMG')
+            img.m-b-1.m-rl-8(src=`${fullUrl}/images/icons/icon-night.png`, alt='IMG')
             span
               | HI 58&deg; LO 56&deg;
           a.left-topbar-item(href='#')
@@ -24,8 +24,8 @@ header
     .wrap-header-mobile
       //- Logo moblie
       .logo-mobile
-        a(hsiref='/')
-          img(src='images/icons/logo-01.png', alt='IMG-LOGO')
+        a(hsiref=`/`)
+          img(src=`${fullUrl}/images/icons/logo-01.png`, alt=`IMG-LOGO`)
       //- Button show menu
       .btn-show-menu-mobile.hamburger.hamburger--squeeze.m-r--8
         span.hamburger-box
@@ -37,53 +37,53 @@ header
           span.left-topbar-item.flex-wr-s-c
             span
               | Hanoi, Vietnam
-            img.m-b-1.m-rl-8(src='images/icons/icon-night.png', alt='IMG')
+            img.m-b-1.m-rl-8(src=`${fullUrl}images/icons/icon-night.png`, alt=`IMG`)
             span
               | HI 58&deg; LO 56&deg;
         li.left-topbar
-          a.left-topbar-item(href='#')
+          a.left-topbar-item(href=`#`)
             | About
-          a.left-topbar-item(href='#')
+          a.left-topbar-item(href=`#`)
             | Contact
-          a.left-topbar-item(href='#')
+          a.left-topbar-item(href=`#`)
             | Sign up
-          a.left-topbar-item(href='/login')
+          a.left-topbar-item(href=`${fullUrl}/login`)
             | Log in
         li.right-topbar
-          a(href='#')
+          a(href=`#`)
             span.fab.fa-facebook-f
-          a(href='#')
+          a(href=`#`)
             span.fab.fa-twitter
-          a(href='#')
+          a(href=`#`)
             span.fab.fa-pinterest-p
-          a(href='#')
+          a(href=`#`)
             span.fab.fa-vimeo-v
-          a(href='#')
+          a(href=`#`)
             span.fab.fa-youtube
       ul.main-menu-m
         li
-          a(href='/') Home
+          a(href=`/`) Home
           span.arrow-main-menu-m
-            //- i.fa.fa-angle-right(aria-hidden='true')
+            //- i.fa.fa-angle-right(aria-hidden=`true`)
         li
-          a(href='category-01.html') News
+          a(href=`category-01.html`) News
     //- 
     .wrap-logo.container
       //- Logo desktop
       .logo
         a(href='/')
-          img(src='images/icons/logo-01.png', alt='LOGO')
+          img(src=`${fullUrl}/images/icons/logo-01.png`, alt='LOGO')
       //- Banner
       .banner-header
         a(href='#')
-          img(src='images/banner-01.jpg', alt='IMG')
+          img(src=`${fullUrl}/images/banner-01.jpg`, alt='IMG')
     //- 
     .wrap-main-nav
       .main-nav
         //- Menu desktop
         nav.menu-desktop
           a.logo-stick(href='/')
-            img(src='images/icons/logo-01.png', alt='LOGO')
+            img(src=`${fullUrl}/images/icons/logo-01.png`, alt='LOGO')
           ul.main-menu
             li.main-menu-active
               a(href='/') Home

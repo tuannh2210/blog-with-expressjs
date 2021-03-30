@@ -1,18 +1,22 @@
-section.bg0.p-t-60.p-b-35
+extends ../layout/client
+block title
+  =title
+block content
+  section.bg0.p-t-60.p-b-35
   .container
     .row.justify-content-center
       .col-md-10.col-lg-8.p-b-20
         .how2.how2-cl4.flex-s-c.m-r-10.m-r-0-sr991
           h3.f1-m-2.cl3.tab01-title
-            | Latest Articles
+           =title
         .row.p-t-35
           each article in articles
             .col-sm-6.p-r-25.p-r-15-sr991
               //-Item latest
               .m-b-45
                 div(style='height:220px;position: relative;')
-                  a.wrap-pic-w.hov1.trans-03(href='article.slug')
-                    img(src=article.images, alt=`${article.title}`)
+                  a.wrap-pic-w.hov1.trans-03(href=`${fullUrl}/${article.slug}`)
+                    img(src=`${fullUrl}/${article.images}`, alt=`${article.title}`)
                 .p-t-16
                   h5.p-b-5
                     a.f1-m-3.cl2.hov-cl10.trans-03(href=article.images)= article.title
@@ -22,4 +26,4 @@ section.bg0.p-t-60.p-b-35
                       | -
                     span.f1-s-3= moment(article.createdAt).format('ll')
           
-      include ./sidebar
+      include ../partials/client/sidebar

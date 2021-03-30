@@ -4,8 +4,8 @@ footer
       .row
         .col-lg-4.p-b-20
           .size-h-3.flex-s-c
-            a(href='index.html')
-              img.max-s-full(src='images/icons/logo-02.png', alt='LOGO')
+            a(href=`/`)
+              img.max-s-full(src=`${fullUrl}/images/icons/logo-02.png`, alt='LOGO')
           div
             p.f1-s-1.cl11.p-b-16
               | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tempor magna eget elit efficitur, at
@@ -16,14 +16,7 @@ footer
             .p-t-15
               a.fs-18.cl11.hov-cl10.trans-03.m-r-8(href='#')
                 span.fab.fa-facebook-f
-              a.fs-18.cl11.hov-cl10.trans-03.m-r-8(href='#')
-                span.fab.fa-twitter
-              a.fs-18.cl11.hov-cl10.trans-03.m-r-8(href='#')
-                span.fab.fa-pinterest-p
-              a.fs-18.cl11.hov-cl10.trans-03.m-r-8(href='#')
-                span.fab.fa-vimeo-v
-              a.fs-18.cl11.hov-cl10.trans-03.m-r-8(href='#')
-                span.fab.fa-youtube
+
         .col-sm-6.col-lg-4.p-b-20.popular-post
           .size-h-3.flex-s-c
             h5.f1-m-7.cl0
@@ -31,14 +24,14 @@ footer
           ul
             each article in popular
               li.flex-wr-sb-s.p-b-20
-                a.size-w-4.wrap-pic-w.hov1.trans-03(href='#')
-                  img(src=`${article.images}`, alt=`${popular.name}`)
+                a.size-w-4.wrap-pic-w.hov1.trans-03(href=`${fullUrl}/${article.slug}`)
+                  img(src=`${fullUrl}/${article.images}`, alt=`${article.name}`)
                 .size-w-5
                   h6.p-b-5
-                    a.f1-s-5.cl11.hov-cl10.trans-03(href='#')
+                    a.f1-s-5.cl11.hov-cl10.trans-03(href=`${fullUrl}/${article.slug}`)
                      =article.title
                   span.f1-s-3.cl6
-                    =article.createdAt.toString().split(' ').splice(1,3).join(' ')
+                    = article.createdAt.toString().split(' ').splice(1,3).join(' ')
             
         .col-sm-6.col-lg-4.p-b-20
           .size-h-3.flex-s-c
@@ -53,12 +46,8 @@ footer
 #myBtn.btn-back-to-top
   span.symbol-btn-back-to-top
     span.fas.fa-angle-up
-//-===============================================================================================
-script(src='vendor/jquery/jquery-3.2.1.min.js')
-//-===============================================================================================
-script(src='vendor/animsition/js/animsition.min.js')
-//-===============================================================================================
-script(src='vendor/bootstrap/js/popper.js')
-script(src='vendor/bootstrap/js/bootstrap.min.js')
-//-===============================================================================================
-script(src='js/main.js')
+script(src=`${fullUrl}/vendor/jquery/jquery-3.2.1.min.js`)
+script(src=`${fullUrl}/vendor/animsition/js/animsition.min.js`)
+script(src=`${fullUrl}/vendor/bootstrap/js/popper.js`)
+script(src=`${fullUrl}/vendor/bootstrap/js/bootstrap.min.js`)
+script(src=`${fullUrl}/js/main.js`)

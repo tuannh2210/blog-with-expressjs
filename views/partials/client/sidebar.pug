@@ -8,7 +8,7 @@
       ul.p-t-35
         each cate in menu
           li.how-bor3.p-rl-4
-            a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href='#')
+            a.dis-block.f1-s-10.text-uppercase.cl2.hov-cl10.trans-03.p-tb-13(href=`${fullUrl}/${cate.slug}.html`)
               =cate.name
         
     //-Popular Posts
@@ -20,19 +20,19 @@
       ul.p-t-35
       each article in popular
         li.flex-wr-sb-s.p-b-30
-          a.size-w-10.wrap-pic-w.hov1.trans-03(href='#')
-            img(src=article.images, alt=article.title)
+          a.size-w-10.wrap-pic-w.hov1.trans-03(href=`${fullUrl}/${article.slug}`)
+            img(src=`${fullUrl}/${article.images}`, alt=article.title)
           .size-w-11
             h6.p-b-4
-              a.f1-s-5.cl3.hov-cl10.trans-03(href='blog-detail-02.html')
+              a.f1-s-5.cl3.hov-cl10.trans-03(href=`${fullUrl}/${article.slug}`)
                 =article.title
             span.cl8.txt-center.p-b-24
-              a.f1-s-6.cl8.hov-cl10.trans-03(href='#')
+              a.f1-s-6.cl8.hov-cl10.trans-03(href=`${fullUrl}/${article.category.slug}.html`)
                 =article.category.name
               span.f1-s-3.m-rl-3
                 | -
               span.f1-s-3
-                 =article.createdAt.toString().split(' ').splice(1,3).join(' ')
+                 =article.createdAt.toString().split(` `).splice(1,3).join(` `)
 
     //-Tag
     div
@@ -40,19 +40,6 @@
         h3.f1-m-2.cl3.tab01-title
           | Tags
       .flex-wr-s-s.m-rl--5
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | Fashion
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | Lifestyle
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | Denim
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | Streetstyle
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | Crafts
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | Magazine
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | News
-        a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href='#')
-          | Blogs
+        each item in tagList
+          a.flex-c-c.size-h-2.bo-1-rad-20.bocl12.f1-s-1.cl8.hov-btn2.trans-03.p-rl-20.p-tb-5.m-all-5(href=`${fullUrl}/tag/${item}`)
+            =item

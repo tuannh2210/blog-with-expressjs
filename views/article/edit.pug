@@ -32,7 +32,7 @@ block content
           textarea#body.form-control(type='text', name='body', placeholder='Enter body')= article.body
         .form-group
           label(for='tag') Tag
-          input#tag.form-control(type='text', name='tag', placeholder='Enter Tag')
+          input#tag.form-control(type='text', name='tags', placeholder='Enter Tag' value= article.tags)
 
         button.btn.btn-primary.btn-block.col-md-3.m-auto(type='submit') Save
-    
+

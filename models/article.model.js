@@ -16,7 +16,7 @@ const ArticleSchema = new Schema(
     description: String,
     body: String,
     view: Number,
-    tagList: [{ type: String }],
+    tags: [{ type: String }],
     favoritesCount: { type: Number, default: 0 },
     comments: [
       {

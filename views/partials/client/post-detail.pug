@@ -1,7 +1,7 @@
 .container
   .headline.bg0.flex-wr-sb-c.p-rl-20.p-tb-8
     .f2-s-1.p-r-30.m-tb-6
-      a.breadcrumb-item.f1-s-3.cl9(href='./')
+      a.breadcrumb-item.f1-s-3.cl9(href='/')
         | Home
       a.breadcrumb-item.f1-s-3.cl9(href=`${article.category.slug}.html`)
         = article.category.name  
@@ -45,9 +45,9 @@ section.bg0.p-b-140.p-t-10
               span.f1-s-12.cl5.m-r-8
                 | Tags:
               .flex-wr-s-s.size-w-0
-                each tag in article.tagList
-                  a.f1-s-12.cl8.hov-link1.m-r-15(href=`tag/${tag}`)
-                    = tag
+                each tag in article.tags
+                  a.f1-s-12.cl8.hov-link1.m-r-15(href=`${fullUrl}/tag/${tag}`)
+                   = tag
                   
             //-Share
             .flex-s-s
